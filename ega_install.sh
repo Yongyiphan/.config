@@ -22,6 +22,7 @@ brew_packages=(
 	python
 	pipenv
 	jesseduffield/lazygit/lazygit
+	gh
 )
 
 brew update
