@@ -1,0 +1,10 @@
+lastupdatecheck: 0
+recentrepos:
+- /home/eyong/.config
+- /mnt/c/Users/edgar/Documents/MainPP/UniP
+startuppopupversion: 5
+customcommandshistory:
+- q
+- echo hello
+- git config --global user.name "edgar"
+hidecommandlog: false
