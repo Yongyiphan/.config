@@ -7,4 +7,4 @@ customcommandshistory:
 - q
 - echo hello
 - git config --global user.name "edgar"
-hidecommandlog: true
+hidecommandlog: false
