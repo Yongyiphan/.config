@@ -4,6 +4,8 @@ vim.g.mapleader = " "
 --Add Main_Dir
 --Update /ignore/.fdignore_main
 
+print("Test")
+
 _G.Main_Dir = "/mnt/c/Users/edgar/"
 _G.Setup_Status = true
 _G.cwd = vim.fn.expand("%:p:h")
