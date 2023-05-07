@@ -105,4 +105,9 @@ else
     rm python_error.log
 fi
 
-alias git=git.exe
+#Adding to .bashrc
+#reroute bash.aliases	
+reroute_aliases="if [ -f ~/.config/.bash_aliases ]; then\n    . ~/.config/.bash_aliases\nfi"
+echo -e "$reroute_aliases" >> ~/.bashrc
+source ~/.bashrc
+echo "Updated bashrc"

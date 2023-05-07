@@ -70,6 +70,17 @@ end, KeyOpts("At Line"))
 --
 MapGroup["<leader>c"] = sections.c
 vmap("n", "<leader>cv", "<cmd>lua _G.edit_nvim()<CR>", KeyOpts("Config Nvim"))
+local save_source = function()
+	local config_dir = os.getenv("HOME") .. "/.config"
+	local current_file = vim.fn.expand("%:p")
+	local filetype = vim.fn.fnamemodify(current_file, ":e")
+	if string.find(current_file, config_dir) and filetype == "lua" then
+		vim.cmd("w " .. current_file)
+		vim.cmd("luafile " .. current_file)
+	end
+end
+vmap("n", "<leader>cs", save_source, KeyOpts("Config Nvim"))
+
 --
 --Find
 --
@@ -129,9 +140,6 @@ vmap("n", "<leader>bb", telescope_builtin.buffers, KeyOpts("List Buffers"))
 
 vmap("n", "<tab>", "<cmd>:BufferLineCycleNext<CR>", KeyOpts("Next buffer"))
 vmap("n", "<S-tab>", "<cmd>:BufferLineCyclePrev<CR>", KeyOpts("Prev buffer"))
---
---Sessions
---
 --
 --Register Key Groups
 --

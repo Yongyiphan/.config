@@ -4,8 +4,48 @@ if not telescope then
 end
 local builtin = require("telescope.builtin")
 
+_G.open_pdf = function(entry)
+	local script_path = "$HOME/.config/nvim/bash/open_edge.sh"
+	local selection = _G.convert_path_to_windows(entry)
+	if selection then
+		local cmd = string.format("%s %s", script_path, selection)
+		local status = vim.fn.system(cmd)
+		assert(status ~= 0, "Error: Open PDF: " .. vim.fn.fnamemodify(entry, ":t"))
+	else
+		print("Not a Windows file")
+	end
+end
+
+local file_open = function(prompt_bufnr)
+	local action_state = require("telescope.actions.state")
+	local picker = action_state.get_current_picker(prompt_bufnr)
+	local current_entry = action_state.get_selected_entry(prompt_bufnr)
+	local selections = {}
+	table.insert(selections, current_entry)
+	for _, entry in ipairs(picker:get_multi_selection()) do
+		if not vim.tbl_contains(selections, entry) then
+			table.insert(selections, entry)
+		end
+	end
+	for _, entry in ipairs(selections) do
+		if vim.fn.fnamemodify(entry.value, ":e") == "pdf" then
+			_G.open_pdf(entry.path)
+		end
+		require("telescope.actions").close(prompt_bufnr)
+	end
+end
+
 telescope.setup({
-	defaults = {},
+	defaults = {
+		mappings = {
+			n = {
+				["<C-o>"] = file_open,
+			},
+			i = {
+				["<C-o>"] = file_open,
+			},
+		},
+	},
 	pickers = {
 		find_files = {
 			mappings = {
@@ -21,7 +61,7 @@ telescope.setup({
 						_G.cwd = vim.fn.fnamemodify(_G.cwd, ":h")
 						opts.cwd = _G.cwd
 						local cmd =
-							{ "fd", "--type", "f", "-HI", "--ignore-files", "~/.config/nvim/ignore/.general_ignore" }
+						{ "fd", "--type", "f", "-H", "--ignore-file", "~/.config/nvim/ignore/.general_ignore" }
 						local current_picker = action_state.get_current_picker(prompt_bufnr)
 						current_picker:refresh(finders.new_oneshot_job(cmd, opts), {})
 					end,
@@ -56,7 +96,9 @@ telescope.setup({
 })
 _G.t_find_files = function()
 	_G.cwd = vim.fn.expand("%:p:h")
-	builtin.find_files()
+	builtin.find_files({
+		find_command = { "fd", "--type", "f", "-H", "--ignore-file", "$HOME/.config/nvim/ignore/.tele_ignore" },
+	})
 end
 
 _G.t_live_grep = function()
