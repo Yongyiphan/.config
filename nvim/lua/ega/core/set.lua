@@ -12,14 +12,16 @@ local options = {
 		smartcase = true,
 		scrolloff = 8,
 		showcmd = true,
-		mouse = 'a',
+		mouse = "a",
 		title = true,
-		clipboard = 'unnamedplus',
+		clipboard = "unnamedplus",
 		backspace = "indent,eol,start",
 		splitright = true,
 		splitbelow = true,
-	}
+	},
 }
+vim.g.toggleterm_terminal_mappings = 0
+
 for scope, table in pairs(options) do
 	for setting, value in pairs(table) do
 		vim[scope][setting] = value
