@@ -85,6 +85,7 @@ telescope.setup({
 			grouped = true,
 			git_status = false,
 			hidden = true,
+			use_fd = true,
 		},
 		fzf = {
 			fuzzy = true,
