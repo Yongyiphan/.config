@@ -41,3 +41,4 @@ _G.convert_path_to_windows = function(path)
 	end
 	return false
 end
+

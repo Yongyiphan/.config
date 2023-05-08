@@ -61,7 +61,7 @@ telescope.setup({
 						_G.cwd = vim.fn.fnamemodify(_G.cwd, ":h")
 						opts.cwd = _G.cwd
 						local cmd =
-						{ "fd", "--type", "f", "-H", "--ignore-file", "~/.config/nvim/ignore/.general_ignore" }
+							{ "fd", "--type", "f", "-H", "--ignore-file", "~/.config/nvim/ignore/.general_ignore" }
 						local current_picker = action_state.get_current_picker(prompt_bufnr)
 						current_picker:refresh(finders.new_oneshot_job(cmd, opts), {})
 					end,
@@ -109,3 +109,4 @@ end
 telescope.load_extension("file_browser")
 telescope.load_extension("media_files")
 telescope.load_extension("fzf")
+telescope.load_extension("dap")

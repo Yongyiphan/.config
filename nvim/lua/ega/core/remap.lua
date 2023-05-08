@@ -22,6 +22,7 @@ local sections = {
 	p = { name = "Project" },
 	g = { name = "Git" },
 	s = { name = "Split" },
+	h = { name = "Help" },
 }
 
 local KeyOpts = function(desc, opts)
@@ -77,6 +78,7 @@ local save_source = function()
 	if string.find(current_file, config_dir) and filetype == "lua" then
 		vim.cmd("w " .. current_file)
 		vim.cmd("luafile " .. current_file)
+		print("Sourced " .. current_file)
 	end
 end
 vmap("n", "<leader>cs", save_source, KeyOpts("Config Nvim"))
@@ -140,6 +142,12 @@ vmap("n", "<leader>bb", telescope_builtin.buffers, KeyOpts("List Buffers"))
 
 vmap("n", "<tab>", "<cmd>:BufferLineCycleNext<CR>", KeyOpts("Next buffer"))
 vmap("n", "<S-tab>", "<cmd>:BufferLineCyclePrev<CR>", KeyOpts("Prev buffer"))
+
+--
+--Help
+--
+MapGroup["<leader>h"] = sections.h
+vmap("n", "<leader>hc", _G.cheatsheet_toggle, KeyOpts("Cheat Sheet"))
 --
 --Register Key Groups
 --

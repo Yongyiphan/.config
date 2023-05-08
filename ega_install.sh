@@ -24,6 +24,7 @@ brew_packages=(
 	pipenv
 	jesseduffield/lazygit/lazygit
 	gh
+	navi
 )
 
 brew update
