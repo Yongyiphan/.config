@@ -52,6 +52,9 @@ telescope.setup({
 			override_file_sorter = true,
 			case_mode = "smart_case",
 		},
+		media_files = {
+			find_cmd = "rg",
+		},
 	},
 })
 _G.t_find_files = function()
