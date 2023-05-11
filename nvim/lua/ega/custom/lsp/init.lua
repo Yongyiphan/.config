@@ -58,14 +58,8 @@ local clangd_cmd = {
 	"--background-index",
 	"--compile-commands-dir=.",
 	"--compile-commands-dir=..",
-	--"--compile-flags=compile_flags.txt",
 	read_file(vim.loop.cwd() .. "/compile_flags.txt"),
 }
-
-clangd_cmd = vim.tbl_flatten({
-	clangd_cmd,
-	read_file(vim.loop.cwd() .. "/compile_flags.txt"),
-})
 
 require("clangd_extensions").setup({
 	server = {
@@ -76,5 +70,4 @@ require("clangd_extensions").setup({
 	},
 })
 
-require("ega.custom.lsp.null_ls")
 require("ega.custom.lsp.null_ls")
