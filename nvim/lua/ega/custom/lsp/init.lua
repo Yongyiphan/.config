@@ -9,10 +9,13 @@ end
 local lspconfig_utils = require("lspconfig/util")
 lsp_zero = lsp_zero.preset({})
 
+local test = "hello"
+
 lsp_zero.ensure_installed({
 	"clangd",
 	"lua_ls",
 })
+local test2 = "Hello2"
 
 lsp_zero.on_attach(function(client, bufnr)
 	lsp_zero.default_keymaps({ buffer = bufnr })
@@ -43,38 +46,31 @@ lsp_zero.skip_server_setup({ "clangd" })
 
 lsp_zero.setup()
 
-local function read_file(path)
-	local file = io.open(path, "r")
-	if not file then
-		return {}
+local function compile_flags(path)
+	path = path or vim.loop.cwd()
+	path = path .. "/compile_flags.txt"
+	local flags = {}
+	for line in io.lines("compile_flags.txt") do
+		table.insert(flags, line)
 	end
-	local contents = file:read("*all")
-	file:close()
-	return vim.split(contents, "\n")
+	return table.concat(flags, " ")
 end
 
 local clangd_cmd = {
 	"clangd",
 	"--background-index",
+	"--clang-tidy",
 	"--compile-commands-dir=.",
-	"--compile-commands-dir=..",
-	--"--compile-flags=compile_flags.txt",
-	read_file(vim.loop.cwd() .. "/compile_flags.txt"),
 }
-
-clangd_cmd = vim.tbl_flatten({
-	clangd_cmd,
-	read_file(vim.loop.cwd() .. "/compile_flags.txt"),
-})
 
 require("clangd_extensions").setup({
 	server = {
 		cmd = clangd_cmd,
-		filetypes = { "c", "cpp", "tpp", "h", "hpp" },
-		root_dir = lspconfig_utils.root_pattern("compile_flags.txt"),
-		capabilities = require("cmp_nvim_lsp").default_capabilities(),
+		on_attach = function(client, bufnr)
+			-- Enable completion
+			require("completion").on_attach(client, bufnr)
+		end,
 	},
 })
 
-require("ega.custom.lsp.null_ls")
 require("ega.custom.lsp.null_ls")

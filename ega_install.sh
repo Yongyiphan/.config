@@ -41,6 +41,8 @@ fi
 #Install Sudo apt packages
 apt_packages=(
 	zip
+	lua5.3
+	liblua5.3-dev
 )
 
 sudo apt-get install -y "${apt_packages[@]}" 2> apt_error.log

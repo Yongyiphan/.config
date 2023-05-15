@@ -2,9 +2,11 @@ lastupdatecheck: 0
 recentrepos:
 - /home/eyong/.config
 - /mnt/c/Users/edgar/Documents/MainPP/UniP
+- /mnt/c/Users/edgar/Documents/MainPP/UniP/CSD1401_Playground
 startuppopupversion: 5
 customcommandshistory:
 - q
 - echo hello
 - git config --global user.name "edgar"
+- submodule
 hidecommandlog: true

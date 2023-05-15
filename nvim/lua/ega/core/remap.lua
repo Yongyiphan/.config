@@ -4,10 +4,6 @@ local telescope = _G.call("telescope")
 if not telescope then
 	return
 end
-local fzf_lua = _G.call("fzf-lua")
-if not fzf_lua then
-	return
-end
 local whichkey = _G.call("which-key")
 if not whichkey then
 	return
@@ -23,9 +19,11 @@ local sections = {
 	g = { name = "Git" },
 	s = { name = "Split" },
 	h = { name = "Help" },
+	d = { name = "Debug" },
+	u = { name = "UI" },
 }
 
-local KeyOpts = function(desc, opts)
+_G.KeyOpts = function(desc, opts)
 	opts = opts or {
 		noremap = true,
 		silent = true,
@@ -79,6 +77,8 @@ local save_source = function()
 		vim.cmd("w " .. current_file)
 		vim.cmd("luafile " .. current_file)
 		print("Sourced " .. current_file)
+	else
+		print("Not a .config lua file")
 	end
 end
 vmap("n", "<leader>cs", save_source, KeyOpts("Config Nvim"))
@@ -148,6 +148,17 @@ vmap("n", "<S-tab>", "<cmd>:BufferLineCyclePrev<CR>", KeyOpts("Prev buffer"))
 --
 MapGroup["<leader>h"] = sections.h
 vmap("n", "<leader>hc", _G.cheatsheet_toggle, KeyOpts("Cheat Sheet"))
+
+--
+--Debug
+--
+local dap = _G.call("dap")
+if not dap then
+	return
+end
+MapGroup["<leader>d"] = sections.d
+MapGroup["<leader>du"] = sections.u
+require("ega.custom.dap.keybinding")
 --
 --Register Key Groups
 --
