@@ -46,31 +46,8 @@ lsp_zero.skip_server_setup({ "clangd" })
 
 lsp_zero.setup()
 
-local function compile_flags(path)
-	path = path or vim.loop.cwd()
-	path = path .. "/compile_flags.txt"
-	local flags = {}
-	for line in io.lines("compile_flags.txt") do
-		table.insert(flags, line)
-	end
-	return table.concat(flags, " ")
-end
-
-local clangd_cmd = {
-	"clangd",
-	"--background-index",
-	"--clang-tidy",
-	"--compile-commands-dir=.",
-}
-
 require("clangd_extensions").setup({
-	server = {
-		cmd = clangd_cmd,
-		on_attach = function(client, bufnr)
-			-- Enable completion
-			require("completion").on_attach(client, bufnr)
-		end,
-	},
+	server = {},
 })
 
 require("ega.custom.lsp.null_ls")
