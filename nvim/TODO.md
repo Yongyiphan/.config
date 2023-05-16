@@ -2,13 +2,14 @@
 - Find Version using FzfLua (main directory searches)
     - Live Grep 
     - Folder
-- dotfiles / .config to github
 - Auto Completion
 - Formatting
     - Comments
     - ColorScheme
     - Folding
-
+- DAP
+    - C/C++
+    - Lua
 
 ## Done For now
 - LSP
@@ -22,3 +23,4 @@
 - Terminal
     - Bash Terminal
     - Git Terminal (Lazygit)
+- dotfiles / .config to github

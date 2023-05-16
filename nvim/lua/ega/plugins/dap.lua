@@ -7,5 +7,13 @@ local M = {
 		},
 	},
 	{ "theHamsta/nvim-dap-virtual-text" },
+	{ "jbyuki/one-small-step-for-vimkind" },
+	{
+		"nvim-telescope/telescope-dap.nvim",
+		dependencies = {
+			"mfussenegger/nvim-dap",
+			"nvim-telescope/telescope.nvim",
+		},
+	},
 }
 return M

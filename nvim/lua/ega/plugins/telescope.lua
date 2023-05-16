@@ -6,9 +6,6 @@ local telescope = {
 			"nvim-lua/plenary.nvim",
 			--"BurntSushi/ripgrep",
 		},
-		config = function()
-			require("telescope").setup({})
-		end,
 	},
 	--extensions
 	{ "nvim-telescope/telescope-file-browser.nvim" },
@@ -21,12 +18,6 @@ local telescope = {
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",
 		build = "make",
-	},
-	{
-		"nvim-telescope/telescope-dap.nvim",
-		dependencies = {
-			"mfussenegger/nvim-dap",
-		},
 	},
 }
 
