@@ -20,6 +20,7 @@ local options = {
 		splitbelow = true,
 	},
 }
+
 vim.g.toggleterm_terminal_mappings = 0
 
 for scope, table in pairs(options) do

@@ -43,31 +43,8 @@ lsp_zero.skip_server_setup({ "clangd" })
 
 lsp_zero.setup()
 
-local function read_file(path)
-	local file = io.open(path, "r")
-	if not file then
-		return {}
-	end
-	local contents = file:read("*all")
-	file:close()
-	return vim.split(contents, "\n")
-end
-
-local clangd_cmd = {
-	"clangd",
-	"--background-index",
-	"--compile-commands-dir=.",
-	"--compile-commands-dir=..",
-	read_file(vim.loop.cwd() .. "/compile_flags.txt"),
-}
-
 require("clangd_extensions").setup({
-	server = {
-		cmd = clangd_cmd,
-		filetypes = { "c", "cpp", "tpp", "h", "hpp" },
-		root_dir = lspconfig_utils.root_pattern("compile_flags.txt"),
-		capabilities = require("cmp_nvim_lsp").default_capabilities(),
-	},
+	server = {},
 })
 
 require("ega.custom.lsp.null_ls")
