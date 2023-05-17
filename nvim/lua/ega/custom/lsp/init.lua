@@ -46,8 +46,6 @@ lsp_zero.skip_server_setup({ "clangd" })
 
 lsp_zero.setup()
 
-require("clangd_extensions").setup({
-	server = {},
-})
+require("clangd_extensions").setup()
 
 require("ega.custom.lsp.null_ls")
