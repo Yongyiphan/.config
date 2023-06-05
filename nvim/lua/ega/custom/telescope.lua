@@ -60,8 +60,16 @@ telescope.setup({
 						opts.entry_maker = make_entry.gen_from_file(opts)
 						_G.cwd = vim.fn.fnamemodify(_G.cwd, ":h")
 						opts.cwd = _G.cwd
-						local cmd =
-							{ "fd", "--type", "f", "-H", "--ignore-file", "~/.config/nvim/ignore/.general_ignore" }
+						local cmd = {
+							"fd",
+							"--type",
+							"f",
+							"-H",
+							"--ignore-file",
+							"$HOME/.config/nvim/ignore/.general_ignore",
+							"--ignore-file",
+							"$HOME/.config/nvim/ignore/.tele_ignore",
+						}
 						local current_picker = action_state.get_current_picker(prompt_bufnr)
 						current_picker:refresh(finders.new_oneshot_job(cmd, opts), {})
 					end,
@@ -98,7 +106,7 @@ telescope.setup({
 _G.t_find_files = function()
 	_G.cwd = vim.fn.expand("%:p:h")
 	builtin.find_files({
-		find_command = { "fd", "--type", "f", "-H", "--ignore-file", "$HOME/.config/nvim/ignore/.tele_ignore" },
+		find_command = { "fd", "--type", "f","--ignore-file", "$HOME/.config/nvim/ignore/.tele_ignore" },
 	})
 end
 

@@ -1,25 +1,38 @@
-return {
+--return {
+--	{
+--		"VonHeikemen/lsp-zero.nvim",
+--		branch = "v2.x",
+--		dependencies = {
+--			-- LSP Support
+--			{ "neovim/nvim-lspconfig" }, -- Required
+--			{
+--				-- Optional
+--				"williamboman/mason.nvim",
+--				build = function()
+--					pcall(vim.cmd, "MasonUpdate")
+--				end,
+--				cmd = { "Mason", "MasonInstall", "MasonUpdate" },
+--			},
+--			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
+--
+--		},
+--	},
+--	{ "p00f/clangd_extensions.nvim" },
+--}
+--
+local P = {
+	{"neovim/nvim-lspconfig"},
 	{
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v2.x",
-		dependencies = {
-			-- LSP Support
-			{ "neovim/nvim-lspconfig" }, -- Required
-			{
-				-- Optional
-				"williamboman/mason.nvim",
-				build = function()
-					pcall(vim.cmd, "MasonUpdate")
-				end,
-				cmd = { "Mason", "MasonInstall", "MasonUpdate" },
-			},
-			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
-
-			-- Autocompletion
-			{ "hrsh7th/nvim-cmp" }, -- Required
-			{ "hrsh7th/cmp-nvim-lsp" }, -- Required
-			{ "L3MON4D3/LuaSnip" }, -- Required
-		},
+		"williamboman/mason.nvim",
+		build = ":MasonUpdate",
+		cmd = { "Mason", "MasonInstall", "MasonUpdate" },
 	},
-	{ "p00f/clangd_extensions.nvim" },
+	{ "williamboman/mason-lspconfig.nvim" }, -- Optional
+	--Auto Completion
+	{ 'hrsh7th/nvim-cmp' },
+	{ 'hrsh7th/cmp-buffer' },
+	{ 'hrsh7th/cmp-path' },
+	{ 'hrsh7th/cmp-nvim-lsp' },
 }
+
+return P

@@ -9,10 +9,6 @@ return {
 	{ 'szw/vim-maximizer' },
 	{ 'numToStr/Comment.nvim', },
 	{ "nvim-tree/nvim-web-devicons", },
-	--Auto Completion
-	{ 'hrsh7th/nvim-cmp' },
-	{ 'hrsh7th/cmp-buffer' },
-	{ 'hrsh7th/cmp-path' },
 	--Auto closing
 	{ 'windwp/nvim-autopairs' },
 	--snippets

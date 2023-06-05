@@ -20,21 +20,21 @@ vmap("n", "<leader>dr", [[:lua require"osv".run_this({log = true})<CR>]], _G.Key
 
 --Dap UI
 vmap("n", "<leader>dut", dapui.toggle, _G.KeyOpts("UI Toggle"))
-vmap("n", "<leader>ta", function()
-	local osv = require("osv")
-	osv.launch({ log = true })
-	print("Test")
-end)
-
-vmap("n", "<leader>tb", function()
-	local osv = require("osv")
-	print(osv.is_running())
-end)
-
-vmap("n", "<leader>tc", function()
-	local osv = require("osv")
-	osv.stop()
-end)
-local test = "T1"
+--vmap("n", "<leader>ta", function()
+--	local osv = require("osv")
+--	osv.launch({ log = true })
+--	print("Test")
+--end)
+--
+--vmap("n", "<leader>tb", function()
+--	local osv = require("osv")
+--	print(osv.is_running())
+--end)
+--
+--vmap("n", "<leader>tc", function()
+--	local osv = require("osv")
+--	osv.stop()
+--end)
+--local test = "T1"
 
 print(dap)

@@ -39,6 +39,8 @@ vmap("v", "K", ":m '<-2<CR>gv=gv", KeyOpts())
 vmap("v", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<CR>", KeyOpts("Rename"))
 
 vmap("x", "<leader>p", '"_dP', KeyOpts("Paste & Keep"))
+vmap("n", "<leader>w", [[:w<CR>]], KeyOpts("Write"))
+vmap("n", "<leader>q", [[:q<CR>]], KeyOpts("Quit"))
 
 --
 --Splits (Default = <C-w>)
@@ -55,6 +57,9 @@ vmap("n", "<leader>sl", "<C-w>l", KeyOpts("Move to Right Split"))
 
 --Diagnostics
 MapGroup["<leader>i"] = sections.i
+vmap("n", "<leader>ia", "<cmd>Telescope diagnostics<CR>", KeyOpts("Next Error"))
+vmap("n", "<leader>i[", "<cmd>lua vim.diagnostic.goto_next()<CR>", KeyOpts("Next Error"))
+vmap("n", "<leader>i]", "<cmd>lua vim.diagnostic.goto_next()<CR>", KeyOpts("Next Error"))
 
 vmap("n", "<leader>ii", function()
 	_G.close_diag_window("c")
@@ -81,7 +86,7 @@ local save_source = function()
 		print("Not a .config lua file")
 	end
 end
-vmap("n", "<leader>cs", save_source, KeyOpts("Config Nvim"))
+vmap("n", "<leader>cs", save_source, KeyOpts("Source"))
 
 --
 --Find

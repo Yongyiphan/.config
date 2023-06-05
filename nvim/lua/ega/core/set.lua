@@ -22,7 +22,8 @@ local options = {
 }
 
 vim.g.toggleterm_terminal_mappings = 0
-
+vim.lsp.set_log_level("error")
+require("vim.lsp.log").set_format_func(vim.inspect)
 for scope, table in pairs(options) do
 	for setting, value in pairs(table) do
 		vim[scope][setting] = value

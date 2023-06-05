@@ -1,51 +1,41 @@
-local lsp_zero = _G.call("lsp-zero")
-if not lsp_zero then
+local mason, mason_lsp, lspconfig = _G.call("mason"), _G.call("mason-lspconfig"), _G.call("lspconfig")
+if not mason or not mason_lsp or not lspconfig then
 	return
-end
-local lspconfig = _G.call("lspconfig")
-if not lspconfig then
-	return
-end
-local lspconfig_utils = require("lspconfig/util")
-lsp_zero = lsp_zero.preset({})
+end 
 
-local test = "hello"
+vim.api.nvim_create_autocmd('LspAttach', {
+  desc = 'LSP actions',
+  callback = function(event)
+    -- Create your keybindings here...
+  end
+})
 
-lsp_zero.ensure_installed({
+mason.setup()
+
+local to_install = {
+	"lua-language-server",
 	"clangd",
+	"cmake",
 	"lua_ls",
-})
-local test2 = "Hello2"
+}
+		
 
-lsp_zero.on_attach(function(client, bufnr)
-	lsp_zero.default_keymaps({ buffer = bufnr })
-	lsp_zero.buffer_autoformat()
-	vim.keymap.set({ "n", "x" }, "gq", function()
-		vim.lsp.buf.format({ async = false, timeout_ms = 100000 })
-	end)
-end)
-
-lsp_zero.set_sign_icons({
-	error = "✘",
-	hint = "▲",
-	warn = "⚑",
-	info = "»",
+mason_lsp.setup({
+	ensure_installed = to_install
 })
 
-vim.filetype.add({
-	extension = {
-		tpp = "cpp",
-	},
-	pattern = {
-		[".*.tpp"] = "cpp",
-	},
-})
 
-lspconfig.lua_ls.setup(lsp_zero.nvim_lua_ls())
-lsp_zero.skip_server_setup({ "clangd" })
+require("cmp").setup{
+	sources = {
+		{name = "nvim_lsp"}
+	}
+}
 
-lsp_zero.setup()
+local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities() 
+local get_servers = mason_lsp.get_installed_servers
 
-require("clangd_extensions").setup()
-
-require("ega.custom.lsp.null_ls")
+for _, server_name in ipairs(get_servers()) do
+  lspconfig[server_name].setup({
+    capabilities = lsp_capabilities,
+  })
+end
