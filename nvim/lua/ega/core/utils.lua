@@ -47,3 +47,13 @@ _G.test_this = function(to_test)
 		to_test()
 	end, { desc = "Test" })
 end
+
+_G.KeyOpts = function(desc, opts)
+	opts = opts or {
+		noremap = true,
+		silent = true,
+		desc = "",
+	}
+	opts.desc = desc
+	return opts
+end

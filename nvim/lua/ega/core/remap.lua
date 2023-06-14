@@ -23,15 +23,6 @@ local sections = {
 	u = { name = "UI" },
 }
 
-_G.KeyOpts = function(desc, opts)
-	opts = opts or {
-		noremap = true,
-		silent = true,
-		desc = "",
-	}
-	opts.desc = desc
-	return opts
-end
 
 vmap("n", "Q", "<nop>", KeyOpts())
 vmap("v", "J", ":m '>+1<CR>gv=gv", KeyOpts())
@@ -57,8 +48,8 @@ vmap("n", "<leader>sl", "<C-w>l", KeyOpts("Move to Right Split"))
 
 --Diagnostics
 MapGroup["<leader>i"] = sections.i
-vmap("n", "<leader>ia", "<cmd>Telescope diagnostics<CR>", KeyOpts("Next Error"))
-vmap("n", "<leader>i[", "<cmd>lua vim.diagnostic.goto_next()<CR>", KeyOpts("Next Error"))
+vmap("n", "<leader>ia", "<cmd>Telescope diagnostics<CR>", KeyOpts("Diagnostics"))
+vmap("n", "<leader>i[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", KeyOpts("Prev Error"))
 vmap("n", "<leader>i]", "<cmd>lua vim.diagnostic.goto_next()<CR>", KeyOpts("Next Error"))
 
 vmap("n", "<leader>ii", function()

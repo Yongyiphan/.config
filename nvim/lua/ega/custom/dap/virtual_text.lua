@@ -26,4 +26,3 @@ virtual_text.setup({
 	end,
 })
 
-print("Virtual")

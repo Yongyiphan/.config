@@ -21,7 +21,7 @@
 --}
 --
 local P = {
-	{"neovim/nvim-lspconfig"},
+	{ "neovim/nvim-lspconfig" },
 	{
 		"williamboman/mason.nvim",
 		build = ":MasonUpdate",
@@ -29,10 +29,12 @@ local P = {
 	},
 	{ "williamboman/mason-lspconfig.nvim" }, -- Optional
 	--Auto Completion
-	{ 'hrsh7th/nvim-cmp' },
-	{ 'hrsh7th/cmp-buffer' },
-	{ 'hrsh7th/cmp-path' },
-	{ 'hrsh7th/cmp-nvim-lsp' },
+	{ "hrsh7th/nvim-cmp" },
+	{ "hrsh7th/cmp-buffer" },
+	{ "hrsh7th/cmp-path" },
+	{ "hrsh7th/cmp-nvim-lsp" },
+	--C++ extensions
+	{ "p00f/clangd_extensions.nvim" },
 }
 
 return P
