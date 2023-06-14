@@ -1,0 +1,3 @@
+#!/bin/sh
+
+LUAROCKS_SYSCONFDIR='/usr/local/etc/luarocks' exec '/usr/bin/lua5.3' -e 'package.path="/home/edgaryong/.config/luarocks-3.9.2/lua_modules/share/lua/5.3/?.lua;/home/edgaryong/.config/luarocks-3.9.2/lua_modules/share/lua/5.3/?/init.lua;/home/edgaryong/.luarocks/share/lua/5.3/?.lua;/home/edgaryong/.luarocks/share/lua/5.3/?/init.lua;/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;"..package.path;package.cpath="/home/edgaryong/.config/luarocks-3.9.2/lua_modules/lib/lua/5.3/?.so;/home/edgaryong/.luarocks/lib/lua/5.3/?.so;/usr/local/lib/lua/5.3/?.so;"..package.cpath' $([ "$*" ] || echo -i) "$@"
