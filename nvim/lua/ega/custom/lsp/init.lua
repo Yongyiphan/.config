@@ -8,6 +8,7 @@ local M = {
 		"clangd",
 		"cmake",
 		"lua_ls",
+		"pyright",
 	},
 	capabilities = require("cmp_nvim_lsp").default_capabilities(),
 }
@@ -42,12 +43,15 @@ M.setup = function(capabilities)
 		capabilities = capabilities,
 	})
 
+	lspconfig.pyright.setup(require("ega.custom.lsp.settings.python"))
+
 	require("clangd_extensions").setup()
 	--lspconfig.glslls.setup()
 	require("ega.custom.lsp.null_ls")
 end
 
 M.setup()
+
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd("LspAttach", {

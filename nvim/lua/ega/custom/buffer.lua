@@ -10,6 +10,7 @@ end
 vim.opt.termguicolors = true
 bufferline.setup({
 	options = {
+		themable = true,
 		indicator = {
 			style = "underline",
 		},

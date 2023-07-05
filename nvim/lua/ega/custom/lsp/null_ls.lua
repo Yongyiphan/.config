@@ -14,12 +14,22 @@ local diagnostics = null_ls.builtins.diagnostics
 --to setup format on save
 
 --local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+mason_null_ls.setup({
+	ensure_installed = {
+		"mypy",
+		"ruff",
+	},
+})
 
 null_ls.setup({
 	sources = {
 		formatting.clang_format,
-		formatting.stylua,
 		diagnostics.cpplint,
+
+		formatting.stylua,
+
+		diagnostics.mypy,
+		diagnostics.ruff,
 	},
 	on_attach = function(current_client, bufnr)
 		if current_client.supports_method("textDocument/formatting") then
