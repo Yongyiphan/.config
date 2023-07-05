@@ -9,10 +9,10 @@ alias git-ssh='git remote set-url origin "$(git remote get-url origin | sed -E '
 alias git-https='git remote set-url origin "$(git remote get-url origin | sed -E '\''s,^git@([^:]*):/*(.*)$,https://\1/\2,'\'')"'
 
 alias vm=nvim
-alias clang=clang-12
+#alias clang=clang-12
 alias gcc="/usr/bin/gcc-10"
 alias g++="/usr/bin/g++-10"
 
 echo "Sourced Bash Aliases"
 
-alias apt_update="sudo ~/.config/apt_update.sh"
+alias au="sudo ~/.config/apt_update.sh"

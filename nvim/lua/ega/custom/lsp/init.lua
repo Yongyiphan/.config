@@ -8,8 +8,11 @@ local M = {
 		"clangd",
 		"cmake",
 		"lua_ls",
+		"pyright",
 	},
-	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+	capabilities = {
+		["cmp_nvim"] = require("cmp_nvim_lsp").default_capabilities(),
+	},
 }
 
 M.setup = function(capabilities)
@@ -35,18 +38,23 @@ M.setup = function(capabilities)
 		},
 	})
 
-	capabilities = capabilities or M.capabilities
+	capabilities = capabilities or M.capabilities["cmp_nvim"]
 
 	lspconfig.lua_ls.setup({
 		settings = require("ega.custom.lsp.settings.lua_ls"),
 		capabilities = capabilities,
 	})
 
-	require("clangd_extensions").setup()
+	lspconfig.pyright.setup(require("ega.custom.lsp.settings.python"))
+
+	require("clangd_extensions").setup({
+		server = require("ega.custom.lsp.settings.clangd"),
+	})
 	--lspconfig.glslls.setup()
 	require("ega.custom.lsp.null_ls")
 end
 
+--Outside of M.setup()
 M.setup()
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer

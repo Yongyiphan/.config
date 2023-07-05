@@ -1,24 +1,11 @@
 CompileFlags:
   Add: [
-    -stdlib=libstdc++,
-    -isystem,
-    /usr/include/c++/10,
-    -isystem,
-    /usr/include/c++/10/backward,
-    -isystem,
-    /usr/local/include,
-    -isystem,
-    /usr/include,
-    -isystem,
-    /usr/include/x86_64-linux-gnu/c++/10,
-    -isystem
-    /mnt/c/Program Files (x86)/Windows Kits/10/Include/10.0.22000.0/um
-    -isystem
-    /mnt/c/Program Files (x86)/Windows Kits/10/Include/10.0.22000.0/shared
-    -isystem
-    /mnt/c/Program Files (x86)/Windows Kits/10/Include/10.0.22000.0/winrt
-    -isystem
-    /mnt/c/Program Files (x86)/Windows Kits/10/Include/10.0.22000.0/cppwinrt
+    -m32,
+    -isystem/mnt/c/Program Files (x86)/Windows Kits/10/Include/10.0.22000.0/ucrt,
+    -isystem/mnt/c/Program Files (x86)/Windows Kits/10/Include/10.0.22000.0/um,
+    -isystem/mnt/c/Program Files (x86)/Windows Kits/10/Include/10.0.22000.0/shared,
+    -isystem/mnt/c/Program Files (x86)/Windows Kits/10/Include/10.0.22000.0/winrt,
+    -isystem/mnt/c/Program Files (x86)/Windows Kits/10/Include/10.0.22000.0/cppwinrt
   ]
 Index:
   Background: Skip

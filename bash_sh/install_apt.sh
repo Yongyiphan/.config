@@ -14,5 +14,6 @@ error_log(){
 
 g_apt_packages=(
 	zip
-
+	nodejs
+	npm
 )

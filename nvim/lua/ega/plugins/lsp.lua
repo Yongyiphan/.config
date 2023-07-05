@@ -35,6 +35,7 @@ local P = {
 	{ "hrsh7th/cmp-nvim-lsp" },
 	--C++ extensions
 	{ "p00f/clangd_extensions.nvim" },
+	{ "microsoft/vscode-codicons" },
 }
 
 return P
