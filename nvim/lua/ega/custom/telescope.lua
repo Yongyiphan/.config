@@ -64,7 +64,6 @@ telescope.setup({
 							"fd",
 							"--type",
 							"f",
-							"-H",
 							"--ignore-file",
 							"$HOME/.config/nvim/ignore/.general_ignore",
 							"--ignore-file",
@@ -103,10 +102,11 @@ telescope.setup({
 		},
 	},
 })
+
 _G.t_find_files = function()
 	_G.cwd = vim.fn.expand("%:p:h")
 	builtin.find_files({
-		find_command = { "fd", "--type", "f","--ignore-file", "$HOME/.config/nvim/ignore/.tele_ignore" },
+		find_command = { "fd", "--type", "f", "--ignore-file", "$HOME/.config/nvim/ignore/.tele_ignore" },
 	})
 end
 

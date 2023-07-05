@@ -33,9 +33,20 @@ local P = {
 	{ "hrsh7th/cmp-buffer" },
 	{ "hrsh7th/cmp-path" },
 	{ "hrsh7th/cmp-nvim-lsp" },
+	{ "cmp-nvim-lsp-signature-help" },
 	--C++ extensions
 	{ "p00f/clangd_extensions.nvim" },
 	{ "microsoft/vscode-codicons" },
+	--formatting & linting
+	{ "jose-elias-alvarez/null-ls.nvim" }, -- configure formatters & linters
+	{
+		"jayp0521/mason-null-ls.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = {
+			"williamboman/mason.nvim",
+			"jose-elias-alvarez/null-ls.nvim",
+		},
+	}, -- bridges gap b/w mason & null-ls
 }
 
 return P

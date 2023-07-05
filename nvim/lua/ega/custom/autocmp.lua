@@ -33,6 +33,7 @@ cmp.setup({
 		{ name = "nvim_lsp" },
 		{ name = "buffer" },
 		{ name = "luasnip" },
+		{ name = "nvim_lsp-signature_help" },
 	}),
 	mapping = {
 		["<CR>"] = cmp.mapping.confirm({ select = true }),
@@ -62,3 +63,6 @@ cmp.setup({
 		end, { "i", "s" }),
 	},
 })
+
+local cmp_autopair = require("nvim-autopairs.completion.cmp")
+cmp.event:on("confim_done", cmp_autopair.on_confirm_done())

@@ -13,6 +13,9 @@ alias vm=nvim
 alias gcc="/usr/bin/gcc-10"
 alias g++="/usr/bin/g++-10"
 
-echo "Sourced Bash Aliases"
 
 alias au="sudo ~/.config/apt_update.sh"
+alias sb="source ~/.bashrc"
+alias env_start="source ./env/bin/activate"
+
+echo "Sourced Bash Aliases"
