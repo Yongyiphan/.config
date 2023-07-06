@@ -16,6 +16,9 @@ alias g++="/usr/bin/g++-10"
 
 alias au="sudo ~/.config/apt_update.sh"
 alias sb="source ~/.bashrc"
-alias env_start="source ./env/bin/activate"
+alias enva="source ./env/bin/activate"
+alias envd="deactivate"
+alias py3="python3"
+alias pip="pip3"
 
 echo "Sourced Bash Aliases"

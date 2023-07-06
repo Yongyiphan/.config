@@ -33,7 +33,7 @@ local P = {
 	{ "hrsh7th/cmp-buffer" },
 	{ "hrsh7th/cmp-path" },
 	{ "hrsh7th/cmp-nvim-lsp" },
-	{ "cmp-nvim-lsp-signature-help" },
+	{ "hrsh7th/cmp-nvim-lsp-signature-help" },
 	--C++ extensions
 	{ "p00f/clangd_extensions.nvim" },
 	{ "microsoft/vscode-codicons" },

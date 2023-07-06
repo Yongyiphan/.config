@@ -14,22 +14,30 @@ local diagnostics = null_ls.builtins.diagnostics
 --to setup format on save
 
 --local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
 mason_null_ls.setup({
 	ensure_installed = {
+		--linter
 		"mypy",
 		"ruff",
+		"cpplint",
+		--formatter
+		"black",
+		"stylua",
+		"clang_format",
 	},
+	automatic_installation = true,
 })
 
 null_ls.setup({
 	sources = {
-		formatting.clang_format,
+		diagnostics.ruff,
+		diagnostics.mypy.with(require("ega.custom.lsp.settings.python").mypy),
 		diagnostics.cpplint,
 
 		formatting.stylua,
-
-		diagnostics.mypy,
-		diagnostics.ruff,
+		formatting.clang_format,
+		formatting.black,
 	},
 	on_attach = function(current_client, bufnr)
 		if current_client.supports_method("textDocument/formatting") then
@@ -38,20 +46,16 @@ null_ls.setup({
 				group = augroup,
 				buffer = bufnr,
 				callback = function()
-					vim.lsp.buf.format({
-						filter = function(client)
-							--  only use null-ls for formatting instead of lsp server
-							return client.name == "null-ls"
-						end,
-						bufnr = bufnr,
-					})
+					--vim.lsp.buf.format({
+					--	filter = function(client)
+					--		--  only use null-ls for formatting instead of lsp server
+					--		return client.name == "null-ls"
+					--	end,
+					--	bufnr = bufnr,
+					--})
+					vim.lsp.buf.format({ bufnr = bufnr })
 				end,
 			})
 		end
 	end,
-})
-
-mason_null_ls.setup({
-	ensure_installed = nil,
-	automatic_installation = true,
 })

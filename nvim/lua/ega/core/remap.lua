@@ -23,7 +23,6 @@ local sections = {
 	u = { name = "UI" },
 }
 
-
 vmap("n", "Q", "<nop>", KeyOpts())
 vmap("v", "J", ":m '>+1<CR>gv=gv", KeyOpts())
 vmap("v", "K", ":m '<-2<CR>gv=gv", KeyOpts())
@@ -51,6 +50,7 @@ MapGroup["<leader>i"] = sections.i
 vmap("n", "<leader>ia", "<cmd>Telescope diagnostics<CR>", KeyOpts("Diagnostics"))
 vmap("n", "<leader>i[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", KeyOpts("Prev Error"))
 vmap("n", "<leader>i]", "<cmd>lua vim.diagnostic.goto_next()<CR>", KeyOpts("Next Error"))
+vmap("n", "<leader>iL", "<cmd>LspLog<CR>", KeyOpts("Next Error"))
 
 vmap("n", "<leader>ii", function()
 	_G.close_diag_window("c")
@@ -78,7 +78,17 @@ local save_source = function()
 	end
 end
 vmap("n", "<leader>cs", save_source, KeyOpts("Source"))
-
+local reload_config = function()
+	for name, _ in ipairs(package.loaded) do
+		if name:match("^ega") then
+			package.loaded[name] = nil
+			print(name)
+		end
+	end
+	dofile(vim.env.MYVIMRC)
+	vim.notify("Reload T Nvim Config!", vim.log.levels.INFO)
+end
+vmap("n", "<leader>cr", reload_config, KeyOpts("Reload Config"))
 --
 --Find
 --
