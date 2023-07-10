@@ -44,7 +44,6 @@ local P = {
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			"williamboman/mason.nvim",
-			"jose-elias-alvarez/null-ls.nvim",
 		},
 	}, -- bridges gap b/w mason & null-ls
 }

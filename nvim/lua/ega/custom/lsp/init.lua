@@ -19,13 +19,9 @@ M.setup = function(capabilities)
 	vim.filetype.add({
 		extension = {
 			tpp = "cpp",
-			--vert = "cpp",
-			--frag = "cpp",
 		},
 		pattern = {
 			[".*.tpp"] = "cpp",
-			--		[".*.vert"] = "cpp",
-			--		[".*.frag"] = "cpp",
 		},
 	})
 	mason.setup()

@@ -20,5 +20,6 @@ alias enva="source ./env/bin/activate"
 alias envd="deactivate"
 alias py3="python3"
 alias pip="pip3"
+alias lg="lazygit"
 
 echo "Sourced Bash Aliases"
