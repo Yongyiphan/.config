@@ -24,3 +24,7 @@
     - Bash Terminal
     - Git Terminal (Lazygit)
 - dotfiles / .config to github
+
+
+# Impt
+- Null-ls to efm

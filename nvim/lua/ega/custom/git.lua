@@ -1,3 +1,4 @@
+local M = {}
 local telescope = _G.call("telescope")
 if not telescope then
 	return
@@ -31,10 +32,12 @@ local lazygit = Terminal:new({
 	end,
 })
 
-function _G._lazygit_toggle()
+function M.toggle_lazygit()
 	lazygit:toggle()
 end
 
-function _G.G_git_files()
+function M.G_git_files()
 	telebuiltin.git_files()
 end
+
+return M

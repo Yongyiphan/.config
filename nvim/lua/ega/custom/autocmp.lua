@@ -29,10 +29,10 @@ cmp.setup({
 		end,
 	},
 	sources = cmp.config.sources({
-		{ name = "path" },
-		{ name = "nvim_lsp" },
-		{ name = "buffer" },
 		{ name = "luasnip" },
+		{ name = "nvim_lsp" },
+		{ name = "path" },
+		{ name = "buffer" },
 		{ name = "nvim_lsp-signature_help" },
 	}),
 	mapping = {

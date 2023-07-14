@@ -27,7 +27,8 @@ return {
 			})
 		end,
 	},
-	{ "EdenEast/nightfox.nvim", opts = {} },
+	{ "EdenEast/nightfox.nvim",  opts = {} },
 	--toggle terminal
 	{ "akinsho/toggleterm.nvim", version = "*", config = true },
+	{ "rcarriga/nvim-notify" },
 }

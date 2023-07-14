@@ -1,8 +1,10 @@
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
+local lspconfig = require("ega.custom.lsp.lspconfig")
 
-local settings = {
+local M = {}
+local lua_settings = {
 	Lua = {
 		runtime = {
 			version = "LuaJIT",
@@ -29,4 +31,11 @@ local settings = {
 		}
 	}
 }
-return settings
+
+M.setup = {
+	on_attach = function(client, bufnr)
+		lspconfig.custom_attach(client, bufnr)
+	end,
+	settings = lua_settings
+}
+return M

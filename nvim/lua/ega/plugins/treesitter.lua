@@ -10,6 +10,12 @@ local ts = {
 		end,
 	},
 	{
+		"creativenull/efmls-configs-nvim",
+		dependencies = {
+			"neovim/nvim-lspconfig",
+		},
+	},
+	{
 		"numirias/semshi",
 	},
 }

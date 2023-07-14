@@ -1,10 +1,11 @@
-local config = require("ega.custom.lsp.lspconfig")
-local on_attach = config.on_attach
-local capabilities = config.capabilities
+local lspconfig = require("ega.custom.lsp.lspconfig")
+local capabilities = lspconfig.capabilities
 
 local M = {}
 M.setup = {
-	on_attach = on_attach,
+	on_attach = function(client, bufnr)
+		lspconfig.custom_attach(client, bufnr, {"efm"})
+	end ,
 	capabilities = capabilities,
 	filetypes = { "python" },
 }

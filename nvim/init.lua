@@ -11,6 +11,7 @@ _G.lua_version = "5.4"
 
 require("ega.core")
 print("Complete Init")
+require("ega.custom.telescope")
 
 if _G.Setup_Status then
 	vim.cmd('call feedkeys("\\<CR>")')

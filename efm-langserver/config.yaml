@@ -1,0 +1,6 @@
+version: 1
+log-file: "~/.config/local/state/nvim/efm.log"
+log-level: 2
+root-markers:
+  - .git/
+

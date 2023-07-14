@@ -8,7 +8,7 @@ local root_files = {
 	".clang-format",
 	"compile_flags.txt",
 	"compile_commands.json",
-	"build.sh", -- buildProject
+	"build.sh",    -- buildProject
 	"configure.ac", -- AutoTools
 	"run",
 	"compile",
@@ -40,7 +40,8 @@ local unused = {
 	--"--folding-ranges",
 	--"--suggest-missing-includes",
 }
-return {
+
+local cpp_server_settings = {
 	cmd = {
 		"clangd",
 		"--all-scopes-completion",
@@ -52,9 +53,11 @@ return {
 		"--function-arg-placeholders",
 		"--header-insertion=iwyu",
 		"--pch-storage=memory", -- could also be disk
-		"-j=4", -- number of workers
+		"-j=4",               -- number of workers
 		--"--log=error",
 		"--log=verbose",
 	},
 	filetypes = { "c", "cpp", "objc", "objcpp" },
 }
+
+require("clangd_extensions").setup({ server = cpp_server_settings,})

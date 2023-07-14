@@ -1,48 +1,17 @@
+local M = {}
+local utils = require("ega.core.utils")
 local telescope = _G.call("telescope")
 if not telescope then
 	return
 end
-local builtin = require("telescope.builtin")
-
-_G.open_pdf = function(entry)
-	local script_path = "$HOME/.config/nvim/bash/open_edge.sh"
-	local selection = _G.convert_path_to_windows(entry)
-	if selection then
-		local cmd = string.format("%s %s", script_path, selection)
-		local status = vim.fn.system(cmd)
-		assert(status ~= 0, "Error: Open PDF: " .. vim.fn.fnamemodify(entry, ":t"))
-	else
-		print("Not a Windows file")
-	end
-end
-
-local file_open = function(prompt_bufnr)
-	local action_state = require("telescope.actions.state")
-	local picker = action_state.get_current_picker(prompt_bufnr)
-	local current_entry = action_state.get_selected_entry(prompt_bufnr)
-	local selections = {}
-	table.insert(selections, current_entry)
-	for _, entry in ipairs(picker:get_multi_selection()) do
-		if not vim.tbl_contains(selections, entry) then
-			table.insert(selections, entry)
-		end
-	end
-	for _, entry in ipairs(selections) do
-		if vim.fn.fnamemodify(entry.value, ":e") == "pdf" then
-			_G.open_pdf(entry.path)
-		end
-		require("telescope.actions").close(prompt_bufnr)
-	end
-end
-
 telescope.setup({
 	defaults = {
 		mappings = {
 			n = {
-				["<C-o>"] = file_open,
+				["<C-o>"] = utils.open_file,
 			},
 			i = {
-				["<C-o>"] = file_open,
+				["<C-o>"] = utils.open_file,
 			},
 		},
 	},
@@ -100,21 +69,31 @@ telescope.setup({
 			override_file_sorter = true,
 			case_mode = "smart_case",
 		},
+
 	},
 })
 
-_G.t_find_files = function()
+function M.find_files()
 	_G.cwd = vim.fn.expand("%:p:h")
+	local builtin = require("telescope.builtin")
 	builtin.find_files({
 		find_command = { "fd", "--type", "f", "--ignore-file", "$HOME/.config/nvim/ignore/.tele_ignore" },
 	})
 end
 
-_G.t_live_grep = function()
+function M.live_grep()
+	local builtin = require("telescope.builtin")
 	builtin.live_grep()
+end
+
+function M.file_browser()
+	local file_browser = telescope.extensions.file_browser
+	file_browser.file_browser()
 end
 
 telescope.load_extension("file_browser")
 telescope.load_extension("media_files")
+telescope.load_extension("ui-select")
 telescope.load_extension("fzf")
 telescope.load_extension("dap")
+return M

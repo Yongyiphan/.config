@@ -20,6 +20,16 @@
 --	{ "p00f/clangd_extensions.nvim" },
 --}
 --
+--formatting & linting
+--{ "jose-elias-alvarez/null-ls.nvim" }, -- configure formatters & linters
+--{
+--	"jayp0521/mason-null-ls.nvim",
+--	event = { "BufReadPre", "BufNewFile" },
+--	dependencies = {
+--		"williamboman/mason.nvim",
+--	},
+--}, -- bridges gap b/w mason & null-ls
+
 local P = {
 	{ "neovim/nvim-lspconfig" },
 	{
@@ -28,6 +38,7 @@ local P = {
 		cmd = { "Mason", "MasonInstall", "MasonUpdate" },
 	},
 	{ "williamboman/mason-lspconfig.nvim" }, -- Optional
+	{ "RubixDev/mason-update-all" },
 	--Auto Completion
 	{ "hrsh7th/nvim-cmp" },
 	{ "hrsh7th/cmp-buffer" },
@@ -37,15 +48,8 @@ local P = {
 	--C++ extensions
 	{ "p00f/clangd_extensions.nvim" },
 	{ "microsoft/vscode-codicons" },
-	--formatting & linting
-	{ "jose-elias-alvarez/null-ls.nvim" }, -- configure formatters & linters
-	{
-		"jayp0521/mason-null-ls.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			"williamboman/mason.nvim",
-		},
-	}, -- bridges gap b/w mason & null-ls
+	{ "lukas-reineke/lsp-format.nvim" },
+	{ "lvimuser/lsp-inlayhints.nvim" },
 }
 
 return P

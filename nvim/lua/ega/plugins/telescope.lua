@@ -19,6 +19,9 @@ local telescope = {
 		"nvim-telescope/telescope-fzf-native.nvim",
 		build = "make",
 	},
+	{
+		"nvim-telescope/telescope-ui-select.nvim",
+	}
 }
 
 return telescope

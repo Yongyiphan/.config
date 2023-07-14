@@ -14,7 +14,7 @@ alias gcc="/usr/bin/gcc-10"
 alias g++="/usr/bin/g++-10"
 
 
-alias au="sudo ~/.config/apt_update.sh"
+alias au="sudo ~/.config/bash_sh/apt_update.sh"
 alias sb="source ~/.bashrc"
 alias enva="source ./env/bin/activate"
 alias envd="deactivate"
@@ -22,4 +22,5 @@ alias py3="python3"
 alias pip="pip3"
 alias lg="lazygit"
 
+export LANG=en_US.UTF-8
 echo "Sourced Bash Aliases"
