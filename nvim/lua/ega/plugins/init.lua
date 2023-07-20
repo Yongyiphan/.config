@@ -1,26 +1,22 @@
 return {
-	{ 'tpope/vim-fugitive' },
-	{ 'tpope/vim-rhubarb' },
-	{ 'tpope/vim-surround', },
-	{ 'inkarkat/vim-ReplaceWithRegister' },
+	{ "tpope/vim-fugitive" },
+	{ "tpope/vim-rhubarb" },
+	{ "tpope/vim-surround" },
+	{ "inkarkat/vim-ReplaceWithRegister" },
 	--tmux & split window navigation
-	{ 'christoomey/vim-tmux-navigator', },
+	{ "christoomey/vim-tmux-navigator" },
 	--maximizes and restore current window
-	{ 'szw/vim-maximizer' },
-	{ 'numToStr/Comment.nvim', },
-	{ "nvim-tree/nvim-web-devicons", },
-	--Auto Completion
-	{ 'hrsh7th/nvim-cmp' },
-	{ 'hrsh7th/cmp-buffer' },
-	{ 'hrsh7th/cmp-path' },
+	{ "szw/vim-maximizer" },
+	{ "numToStr/Comment.nvim" },
+	{ "nvim-tree/nvim-web-devicons" },
 	--Auto closing
-	{ 'windwp/nvim-autopairs' },
+	{ "windwp/nvim-autopairs" },
 	--snippets
-	{ 'L3MON4D3/Luasnip' },
+	{ "L3MON4D3/Luasnip" },
 	{ "saadparwaiz1/cmp_luasnip" }, -- for autocompletion
 	{ "rafamadriz/friendly-snippets" },
 	{
-		'folke/which-key.nvim',
+		"folke/which-key.nvim",
 		config = function()
 			vim.o.timeout = true
 			vim.o.timeoutlen = 200
@@ -29,12 +25,9 @@ return {
 					group = "",
 				},
 			})
-		end
+		end,
 	},
-	{ "EdenEast/nightfox.nvim",         opts = {} },
-	--formatting & linting
-	{ "jose-elias-alvarez/null-ls.nvim" }, -- configure formatters & linters
-	{ "jayp0521/mason-null-ls.nvim" },    -- bridges gap b/w mason & null-ls
+	{ "EdenEast/nightfox.nvim", opts = {} },
 	--toggle terminal
-	{ 'akinsho/toggleterm.nvim',        version = "*", config = true }
+	{ "akinsho/toggleterm.nvim", version = "*", config = true },
 }

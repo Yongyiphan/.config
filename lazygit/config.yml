@@ -1,1 +1,2 @@
-quitOnTopLevelReturn: true
+quitOnTopLevelReturn: false
+git.trackSubmodules: false

@@ -4,10 +4,6 @@ local telescope = _G.call("telescope")
 if not telescope then
 	return
 end
-local fzf_lua = _G.call("fzf-lua")
-if not fzf_lua then
-	return
-end
 local whichkey = _G.call("which-key")
 if not whichkey then
 	return
@@ -22,17 +18,10 @@ local sections = {
 	p = { name = "Project" },
 	g = { name = "Git" },
 	s = { name = "Split" },
+	h = { name = "Help" },
+	d = { name = "Debug" },
+	u = { name = "UI" },
 }
-
-local KeyOpts = function(desc, opts)
-	opts = opts or {
-		noremap = true,
-		silent = true,
-		desc = "",
-	}
-	opts.desc = desc
-	return opts
-end
 
 vmap("n", "Q", "<nop>", KeyOpts())
 vmap("v", "J", ":m '>+1<CR>gv=gv", KeyOpts())
@@ -40,6 +29,8 @@ vmap("v", "K", ":m '<-2<CR>gv=gv", KeyOpts())
 vmap("v", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<CR>", KeyOpts("Rename"))
 
 vmap("x", "<leader>p", '"_dP', KeyOpts("Paste & Keep"))
+vmap("n", "<leader>w", [[:w<CR>]], KeyOpts("Write"))
+vmap("n", "<leader>q", [[:q<CR>]], KeyOpts("Quit"))
 
 --
 --Splits (Default = <C-w>)
@@ -56,6 +47,10 @@ vmap("n", "<leader>sl", "<C-w>l", KeyOpts("Move to Right Split"))
 
 --Diagnostics
 MapGroup["<leader>i"] = sections.i
+vmap("n", "<leader>ia", "<cmd>Telescope diagnostics<CR>", KeyOpts("Diagnostics"))
+vmap("n", "<leader>i[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", KeyOpts("Prev Error"))
+vmap("n", "<leader>i]", "<cmd>lua vim.diagnostic.goto_next()<CR>", KeyOpts("Next Error"))
+vmap("n", "<leader>iL", "<cmd>LspLog<CR>", KeyOpts("Next Error"))
 
 vmap("n", "<leader>ii", function()
 	_G.close_diag_window("c")
@@ -77,10 +72,23 @@ local save_source = function()
 	if string.find(current_file, config_dir) and filetype == "lua" then
 		vim.cmd("w " .. current_file)
 		vim.cmd("luafile " .. current_file)
+		print("Sourced " .. current_file)
+	else
+		print("Not a .config lua file")
 	end
 end
-vmap("n", "<leader>cs", save_source, KeyOpts("Config Nvim"))
-
+vmap("n", "<leader>cs", save_source, KeyOpts("Source"))
+local reload_config = function()
+	for name, _ in ipairs(package.loaded) do
+		if name:match("^ega") then
+			package.loaded[name] = nil
+			print(name)
+		end
+	end
+	dofile(vim.env.MYVIMRC)
+	vim.notify("Reload T Nvim Config!", vim.log.levels.INFO)
+end
+vmap("n", "<leader>cr", reload_config, KeyOpts("Reload Config"))
 --
 --Find
 --
@@ -140,6 +148,23 @@ vmap("n", "<leader>bb", telescope_builtin.buffers, KeyOpts("List Buffers"))
 
 vmap("n", "<tab>", "<cmd>:BufferLineCycleNext<CR>", KeyOpts("Next buffer"))
 vmap("n", "<S-tab>", "<cmd>:BufferLineCyclePrev<CR>", KeyOpts("Prev buffer"))
+
+--
+--Help
+--
+MapGroup["<leader>h"] = sections.h
+vmap("n", "<leader>hc", _G.cheatsheet_toggle, KeyOpts("Cheat Sheet"))
+
+--
+--Debug
+--
+local dap = _G.call("dap")
+if not dap then
+	return
+end
+MapGroup["<leader>d"] = sections.d
+MapGroup["<leader>du"] = sections.u
+require("ega.custom.dap.keybinding")
 --
 --Register Key Groups
 --

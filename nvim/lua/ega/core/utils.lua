@@ -41,3 +41,19 @@ _G.convert_path_to_windows = function(path)
 	end
 	return false
 end
+
+_G.test_this = function(to_test)
+	vim.keymap.set("n", "<leader>t", function()
+		to_test()
+	end, { desc = "Test" })
+end
+
+_G.KeyOpts = function(desc, opts)
+	opts = opts or {
+		noremap = true,
+		silent = true,
+		desc = "",
+	}
+	opts.desc = desc
+	return opts
+end

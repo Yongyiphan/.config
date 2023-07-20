@@ -3,9 +3,12 @@ recentrepos:
 - /home/edgaryong/.config
 - /mnt/c/Users/edgar/Documents/MainPP/UniP
 - /mnt/c/Users/edgar/Documents/MainPP/UniP/CSD1401_Playground
+- /mnt/c/Users/edgar/Documents/MainPP/ScrapyMS
+- /mnt/c/Users/edgar/Documents/MainPP/UniP/CSD1451_SEP_2/Project/CSD1451
 startuppopupversion: 5
 customcommandshistory:
 - q
 - echo hello
 - git config --global user.name "edgar"
+- submodule
 hidecommandlog: true
