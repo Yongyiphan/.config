@@ -2,8 +2,9 @@ local fzf_lua = _G.call("fzf-lua")
 if not fzf_lua then
 	return
 end
+local M = {}
 --Searches MNT/C
-_G.main_fzf_files = function()
+M.main_fzf_files = function()
 	fzf_lua.files({
 		cwd = _G.Main_Dir,
 		git_icons = true,
@@ -13,7 +14,7 @@ _G.main_fzf_files = function()
 	})
 end
 
-_G.live_grep = function(opts)
+M.live_grep = function(opts)
 	opts = opts or {}
 	opts.prompt = "rg> "
 	opts.git_icons = true
@@ -48,3 +49,4 @@ fzf_lua.setup({
 		fd_opts = "-HI --color=always --type f  --follow --ignore-file ~/.config/nvim/ignore/.general_ignore",
 	},
 })
+return M

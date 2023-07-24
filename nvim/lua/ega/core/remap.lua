@@ -47,75 +47,55 @@ vmap("n", "<leader>sl", "<C-w>l", KeyOpts("Move to Right Split"))
 
 --Diagnostics
 MapGroup["<leader>i"] = sections.i
+Diagnostics = require("ega.core.diagnostics")
 vmap("n", "<leader>ia", "<cmd>Telescope diagnostics<CR>", KeyOpts("Diagnostics"))
 vmap("n", "<leader>i[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", KeyOpts("Prev Error"))
 vmap("n", "<leader>i]", "<cmd>lua vim.diagnostic.goto_next()<CR>", KeyOpts("Next Error"))
 vmap("n", "<leader>iL", "<cmd>LspLog<CR>", KeyOpts("Next Error"))
 
 vmap("n", "<leader>ii", function()
-	_G.close_diag_window("c")
+	Diagnostics.close_diag_window("c")
 end, KeyOpts("At Cursor"))
 
 vmap("n", "<leader>il", function()
-	_G.close_diag_window("l")
+	Diagnostics.close_diag_window("l")
 end, KeyOpts("At Line"))
 
 --
 --Config
 --
 MapGroup["<leader>c"] = sections.c
-vmap("n", "<leader>cv", "<cmd>lua _G.edit_nvim()<CR>", KeyOpts("Config Nvim"))
-local save_source = function()
-	local config_dir = os.getenv("HOME") .. "/.config"
-	local current_file = vim.fn.expand("%:p")
-	local filetype = vim.fn.fnamemodify(current_file, ":e")
-	if string.find(current_file, config_dir) and filetype == "lua" then
-		vim.cmd("w " .. current_file)
-		vim.cmd("luafile " .. current_file)
-		print("Sourced " .. current_file)
-	else
-		print("Not a .config lua file")
-	end
-end
-vmap("n", "<leader>cs", save_source, KeyOpts("Source"))
-local reload_config = function()
-	for name, _ in ipairs(package.loaded) do
-		if name:match("^ega") then
-			package.loaded[name] = nil
-			print(name)
-		end
-	end
-	dofile(vim.env.MYVIMRC)
-	vim.notify("Reload T Nvim Config!", vim.log.levels.INFO)
-end
-vmap("n", "<leader>cr", reload_config, KeyOpts("Reload Config"))
+Config = require("ega.custom.nvim_config")
+vmap("n", "<leader>cv", Config.edit_nvim, KeyOpts("Config Nvim"))
+vmap("n", "<leader>cs", Config.save_source, KeyOpts("Source"))
+vmap("n", "<leader>cr", Config.reload_config, KeyOpts("Reload Config"))
 --
 --Find
 --
 MapGroup["<leader>f"] = sections.f
-vmap("n", "<leader>fm", _G.main_fzf_files, KeyOpts("From C:"))
+FZF = require("ega.custom.fzflua")
+vmap("n", "<leader>fm", FZF.main_fzf_files, KeyOpts("From C:"))
 
 --Project
 MapGroup["<leader>p"] = sections.p
-vmap("n", "<leader>pf", _G.t_find_files, KeyOpts("Curr Project"))
-vmap("n", "<leader>pw", _G.t_live_grep, KeyOpts("Word"))
+Tele = require("ega.custom.telescope")
+vmap("n", "<leader>pf", Tele.t_find_files, KeyOpts("Curr Project"))
+vmap("n", "<leader>pw", Tele.t_live_grep, KeyOpts("Word"))
 
 --
 --Git Stuffs
 --
 MapGroup["<leader>g"] = sections.g
-vmap("n", "<leader>gf", _G.G_git_files, KeyOpts("Find Files"))
+Git = require("ega.custom.git")
+vmap("n", "<leader>gf", Git.G_git_files, KeyOpts("Find Files"))
 vmap("n", "<leader>gs", vim.cmd.Git, KeyOpts("Git"))
-vmap("n", "<leader>gt", "<cmd>lua _G._lazygit_toggle()<CR>", KeyOpts("Git Terminal"))
+vmap("n", "<leader>gt", Git._lazygit_toggle, KeyOpts("Git Terminal"))
 
 --
 --File Explorer Stuffs
 --
 --MapGroup["<leader>e"] = sections.e
-local file_browser = telescope.extensions.file_browser
-vmap("n", "<leader>e", function()
-	file_browser.file_browser()
-end, KeyOpts(sections.e.name))
+vmap("n", "<leader>e", Tele.file_explorer, KeyOpts(sections.e.name))
 
 -- Default keymaps in insert/normal mode:
 -- `<cr>`: opens the currently selected file, or navigates to the currently selected directory

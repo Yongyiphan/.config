@@ -1,3 +1,4 @@
+local M = {}
 vim.diagnostic.config({
 	virtual_text = false,
 	signs = true,
@@ -17,7 +18,7 @@ for type, icon in pairs(signs) do
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-function _G.close_diag_window(scope)
+function M.close_diag_window(scope)
 	-- If we find a floating window, close it.
 	local found_float = false
 	for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -52,4 +53,6 @@ function PrintDiagnostics(opts, bufnr, line_nr, client_id)
 	end
 	vim.api.nvim_echo({ { diagnostic_message, "Normal" } }, false, {})
 end
+
 vim.cmd([[ autocmd! CursorHold * lua PrintDiagnostics() ]])
+return M

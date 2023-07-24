@@ -3,8 +3,9 @@ if not telescope then
 	return
 end
 local builtin = require("telescope.builtin")
+local M = {}
 
-_G.open_pdf = function(entry)
+M.open_pdf = function(entry)
 	local script_path = "$HOME/.config/nvim/bash/open_edge.sh"
 	local selection = _G.convert_path_to_windows(entry)
 	if selection then
@@ -16,7 +17,7 @@ _G.open_pdf = function(entry)
 	end
 end
 
-local file_open = function(prompt_bufnr)
+M.file_open = function(prompt_bufnr)
 	local action_state = require("telescope.actions.state")
 	local picker = action_state.get_current_picker(prompt_bufnr)
 	local current_entry = action_state.get_selected_entry(prompt_bufnr)
@@ -29,7 +30,7 @@ local file_open = function(prompt_bufnr)
 	end
 	for _, entry in ipairs(selections) do
 		if vim.fn.fnamemodify(entry.value, ":e") == "pdf" then
-			_G.open_pdf(entry.path)
+			M.open_pdf(entry.path)
 		end
 		require("telescope.actions").close(prompt_bufnr)
 	end
@@ -39,10 +40,10 @@ telescope.setup({
 	defaults = {
 		mappings = {
 			n = {
-				["<C-o>"] = file_open,
+				["<C-o>"] = M.file_open,
 			},
 			i = {
-				["<C-o>"] = file_open,
+				["<C-o>"] = M.file_open,
 			},
 		},
 	},
@@ -103,18 +104,23 @@ telescope.setup({
 	},
 })
 
-_G.t_find_files = function()
+M.t_find_files = function()
 	_G.cwd = vim.fn.expand("%:p:h")
 	builtin.find_files({
 		find_command = { "fd", "--type", "f", "--ignore-file", "$HOME/.config/nvim/ignore/.tele_ignore" },
 	})
 end
 
-_G.t_live_grep = function()
+M.t_live_grep = function()
 	builtin.live_grep()
+end
+
+M.file_explorer = function()
+	telescope.extensions.file_browser.file_browser()
 end
 
 telescope.load_extension("file_browser")
 telescope.load_extension("media_files")
 telescope.load_extension("fzf")
 telescope.load_extension("dap")
+return M
