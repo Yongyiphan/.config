@@ -18,10 +18,4 @@ local findmypy_config = function()
 	return mypy_config
 end
 
-M.mypy = {
-	args = {
-		"--install-types",
-	},
-}
-
 return M

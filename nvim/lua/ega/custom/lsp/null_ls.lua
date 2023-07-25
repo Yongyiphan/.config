@@ -32,7 +32,7 @@ mason_null_ls.setup({
 null_ls.setup({
 	sources = {
 		diagnostics.ruff,
-		diagnostics.mypy.with(require("ega.custom.lsp.settings.python").mypy),
+		diagnostics.mypy,
 		diagnostics.cpplint,
 
 		formatting.stylua,

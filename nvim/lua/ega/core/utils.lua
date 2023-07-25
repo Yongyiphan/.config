@@ -1,9 +1,3 @@
-function _G.edit_nvim()
-	require("telescope.builtin").find_files({
-		cwd = "~/.config/nvim",
-	})
-end
-
 _G.plugins = {}
 function _G.call(plugin)
 	if _G.plugins[plugin] ~= nil then
