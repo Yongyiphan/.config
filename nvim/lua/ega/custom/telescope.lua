@@ -94,6 +94,11 @@ telescope.setup({
 			git_status = false,
 			hidden = true,
 			use_fd = true,
+			mappings = {
+				["n"] = {
+					["]"] = require("telescope._extensions.file_browser.actions").toggle_respect_gitignore,
+				},
+			},
 		},
 		fzf = {
 			fuzzy = true,

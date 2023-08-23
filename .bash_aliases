@@ -21,6 +21,18 @@ alias envd="deactivate"
 alias py3="python3"
 alias pip="pip3"
 alias lg="lazygit"
-alias rflock="ll .git && rm -rf .git/index.lock"
+rmlock(){
+	if [ -d ".git" ]; then
+		if [ -f ".git/index.lock" ]; then
+			echo "Index.lock Found"
+			rm -rf .git/index.lock
+			echo "Index.lock removed"
+		else
+			echo "Cannot find Index.lock"
+		fi
+	fi
+
+}
+alias rmlock=rmlock
 
 echo "Sourced Bash Aliases"

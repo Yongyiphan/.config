@@ -10,12 +10,24 @@ local vmap = vim.keymap.set
 --vmap("n", "<leader>1", _G.dap_start, { noremap = true })
 --vmap("n", "<leader>2", _G.dap_stop, { noremap = true })
 vmap("n", "<leader>db", dap.toggle_breakpoint, _G.KeyOpts("Toggle Breakpoint"))
-vmap("n", "<F5>", dap.continue, _G.KeyOpts("Continue"))
+vmap("n", "<leader>dB", function()
+	dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+end, _G.KeyOpts("Conditional Breakpoint"))
 vmap("n", "<leader>dc", "<cmd>Telescope dap configurations<CR>", _G.KeyOpts("Configs"))
 vmap("n", "<leader>dt", dap.terminate, _G.KeyOpts("Terminate"))
+
+vmap("n", "<F5>", dap.continue, _G.KeyOpts("Continue"))
 vmap("n", "<F9>", dap.step_over, _G.KeyOpts("Step-over"))
 vmap("n", "<F10>", dap.step_into, _G.KeyOpts("Step-into"))
-vmap("n", "<F11>", dap.step_out, _G.KeyOpts("Step-out"))
+vmap("n", "<F8", dap.step_out, _G.KeyOpts("Step-out"))
+
+vmap("n", "<leader>dsc", dap.continue, _G.KeyOpts("Continue"))
+vmap("n", "<leader>dsv", dap.step_over, _G.KeyOpts("Step Over"))
+vmap("n", "<leader>dsi", dap.step_into, _G.KeyOpts("Step Into"))
+vmap("n", "<leader>dso", dap.step_out, _G.KeyOpts("Step Out"))
+
+vmap("n", "<leader>dhh", ":lua require('dap.ui.variables').hover()<CR>")
+vmap("v", "<leader>dhv", ":lua require('dap.ui.variables').visual_hover()<CR>")
 
 --Dap UI
-vmap("n", "<leader>dut", dapui.toggle, _G.KeyOpts("UI Toggle"))
+vmap("n", "<leader>di", dapui.toggle, _G.KeyOpts("UI Toggle"))
