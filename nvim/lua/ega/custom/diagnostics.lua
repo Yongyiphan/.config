@@ -33,6 +33,14 @@ function M.close_diag_window(scope)
 	vim.diagnostic.open_float(nil, { focus = true, scope = scope })
 end
 
+function M.close_diag_at_line()
+	M.close_diag_window("l")
+end
+
+function M.close_diag_at_cursor()
+	M.close_diag_window("c")
+end
+
 function PrintDiagnostics(opts, bufnr, line_nr, client_id)
 	bufnr = bufnr or 0
 	line_nr = line_nr or (vim.api.nvim_win_get_cursor(0)[1] - 1)

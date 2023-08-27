@@ -23,7 +23,6 @@ _G.Core = {
 
 require("ega.core.set")
 require("ega.core.utils")
-require("ega.core.diagnostics")
 local lazystatus, lazy = pcall(require, "lazy")
 if not lazystatus then
 	return

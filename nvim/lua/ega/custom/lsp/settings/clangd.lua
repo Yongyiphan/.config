@@ -31,8 +31,6 @@ _G.compile_commmands_json_to_unix = function()
 	end
 end
 
-_G.test_this(_G.compile_commmands_json_to_unix)
-
 local unused = {
 	--"--cross-file-rename",
 	--"--debug-origin",

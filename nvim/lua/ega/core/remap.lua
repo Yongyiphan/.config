@@ -23,6 +23,10 @@ local sections = {
 	u = { name = "UI" },
 }
 
+-- Initial Load of all Custom configs
+local Custom = require("ega.custom")
+local Utils = require("ega.core.utils")
+
 vmap("n", "Q", "<nop>", KeyOpts())
 vmap("v", "J", ":m '>+1<CR>gv=gv", KeyOpts())
 vmap("v", "K", ":m '<-2<CR>gv=gv", KeyOpts())
@@ -47,55 +51,41 @@ vmap("n", "<leader>sl", "<C-w>l", KeyOpts("Move to Right Split"))
 
 --Diagnostics
 MapGroup["<leader>i"] = sections.i
-Diagnostics = require("ega.core.diagnostics")
 vmap("n", "<leader>ia", "<cmd>Telescope diagnostics<CR>", KeyOpts("Diagnostics"))
 vmap("n", "<leader>i[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", KeyOpts("Prev Error"))
 vmap("n", "<leader>i]", "<cmd>lua vim.diagnostic.goto_next()<CR>", KeyOpts("Next Error"))
-vmap("n", "<leader>iL", "<cmd>LspLog<CR>", KeyOpts("Next Error"))
-
-vmap("n", "<leader>ii", function()
-	Diagnostics.close_diag_window("c")
-end, KeyOpts("At Cursor"))
-
-vmap("n", "<leader>il", function()
-	Diagnostics.close_diag_window("l")
-end, KeyOpts("At Line"))
+vmap("n", "<leader>iL", "<cmd>LspLog<CR>", KeyOpts("LSP Log"))
+vmap("n", "<leader>ii", Custom.diagnostics.close_diag_at_cursor, KeyOpts("At Cursor"))
+vmap("n", "<leader>il", Custom.diagnostics.close_diag_at_line, KeyOpts("At Line"))
 
 --
 --Config
 --
 MapGroup["<leader>c"] = sections.c
-Config = require("ega.custom.nvim_config")
-vmap("n", "<leader>cv", Config.edit_nvim, KeyOpts("Config Nvim"))
-vmap("n", "<leader>cs", Config.save_source, KeyOpts("Source"))
-vmap("n", "<leader>cr", Config.reload_config, KeyOpts("Reload Config"))
+vmap("n", "<leader>cv", Custom.config.edit_nvim, KeyOpts("Config Nvim"))
+vmap("n", "<leader>cs", Custom.config.save_source, KeyOpts("Source"))
+vmap("n", "<leader>cr", Custom.config.reload_config, KeyOpts("Reload Config"))
 --
 --Find
 --
 MapGroup["<leader>f"] = sections.f
-FZF = require("ega.custom.fzflua")
-vmap("n", "<leader>fm", FZF.main_fzf_files, KeyOpts("From C:"))
-
---Project
-MapGroup["<leader>p"] = sections.p
-Tele = require("ega.custom.telescope")
-vmap("n", "<leader>pf", Tele.t_find_files, KeyOpts("Curr Project"))
-vmap("n", "<leader>pw", Tele.t_live_grep, KeyOpts("Word"))
+vmap("n", "<leader>fm", Custom.fzflua.main_fzf_files, KeyOpts("From C:"))
+vmap("n", "<leader>ff", Custom.telescope.t_find_files, KeyOpts("Project File"))
+vmap("n", "<leader>fw", Custom.telescope.t_live_grep, KeyOpts("Word"))
+vmap("n", "<leader>fo", Custom.telescope.builtin.oldfiles, KeyOpts("Old Files"))
+vmap("n", "<leader>fg", Custom.git.G_git_files, KeyOpts("Git Files"))
 
 --
 --Git Stuffs
 --
 MapGroup["<leader>g"] = sections.g
-Git = require("ega.custom.git")
-vmap("n", "<leader>gf", Git.G_git_files, KeyOpts("Find Files"))
-vmap("n", "<leader>gs", vim.cmd.Git, KeyOpts("Git"))
-vmap("n", "<leader>gt", Git._lazygit_toggle, KeyOpts("Git Terminal"))
+vmap("n", "<leader>gt", Custom.git._lazygit_toggle, KeyOpts("Git Terminal"))
 
 --
 --File Explorer Stuffs
 --
 --MapGroup["<leader>e"] = sections.e
-vmap("n", "<leader>e", Tele.file_explorer, KeyOpts(sections.e.name))
+vmap("n", "<leader>e", Custom.telescope.file_explorer, KeyOpts(sections.e.name))
 
 -- Default keymaps in insert/normal mode:
 -- `<cr>`: opens the currently selected file, or navigates to the currently selected directory
@@ -112,7 +102,8 @@ vmap("n", "<leader>e", Tele.file_explorer, KeyOpts(sections.e.name))
 -- `<C-f>/f`: Toggle between file and folder browser
 -- `<C-h>/h`: Toggle hidden files/folders
 -- `<C-s>/s`: Toggle all entries ignoring `./` and `../`
--- `<bs>/` : Goes to parent dir if prompt is empty, otherwise acts normally
+-- ` <bs>/` : Goes to parent dir if prompt is empty, otherwise acts normally
+-- '   <>/]': Ignore .gitignore
 
 --
 --Buffer
@@ -123,8 +114,8 @@ vmap("n", "<leader>bX", "<cmd>:BDelete! this<CR>", KeyOpts("Clear this  buf"))
 vmap("n", "<leader>bo", "<cmd>:BWipeout other<CR>", KeyOpts("Clear other buf"))
 vmap("n", "<leader>ba", "<cmd>:BWipeout all<CR>", KeyOpts("Clear *ALL* buf"))
 vmap("n", "<leader>bA", "<cmd>:BWipeout! all<CR>", KeyOpts("Clear *ALL* buf"))
-local telescope_builtin = require("telescope.builtin")
-vmap("n", "<leader>bb", telescope_builtin.buffers, KeyOpts("List Buffers"))
+vmap("n", "<leader>bb", Custom.telescope.builtin.buffers, KeyOpts("List Buffers"))
+vmap("n", "<leader>bl", Utils.CurrentLoc, KeyOpts("Filepath"))
 
 vmap("n", "<tab>", "<cmd>:BufferLineCycleNext<CR>", KeyOpts("Next buffer"))
 vmap("n", "<S-tab>", "<cmd>:BufferLineCyclePrev<CR>", KeyOpts("Prev buffer"))
@@ -133,7 +124,8 @@ vmap("n", "<S-tab>", "<cmd>:BufferLineCyclePrev<CR>", KeyOpts("Prev buffer"))
 --Help
 --
 MapGroup["<leader>h"] = sections.h
-vmap("n", "<leader>hc", _G.cheatsheet_toggle, KeyOpts("Cheat Sheet"))
+vmap("n", "<leader>hc", Custom.cs.cheatsheet_toggle, KeyOpts("Cheat Sheet"))
+vmap("n", "<leader>hk", Custom.telescope.builtin.keymaps, KeyOpts("Key Maps"))
 
 --
 --Debug
