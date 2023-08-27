@@ -3,11 +3,14 @@ if not telescope then
 	return
 end
 local builtin = require("telescope.builtin")
+local Utils = require("ega.core.utils")
 local M = {}
+M.builtin = builtin
+M.telescope = telescope
 
 M.open_pdf = function(entry)
 	local script_path = "$HOME/.config/nvim/bash/open_edge.sh"
-	local selection = _G.convert_path_to_windows(entry)
+	local selection = Utils.convert_path_to_windows(entry)
 	if selection then
 		local cmd = string.format("%s %s", script_path, selection)
 		local status = vim.fn.system(cmd)
@@ -20,7 +23,8 @@ end
 M.file_open = function(prompt_bufnr)
 	local action_state = require("telescope.actions.state")
 	local picker = action_state.get_current_picker(prompt_bufnr)
-	local current_entry = action_state.get_selected_entry(prompt_bufnr)
+	-- local current_entry = action_state.get_selected_entry(prompt_bufnr)
+	local current_entry = action_state.get_selected_entry()
 	local selections = {}
 	table.insert(selections, current_entry)
 	for _, entry in ipairs(picker:get_multi_selection()) do
@@ -36,6 +40,49 @@ M.file_open = function(prompt_bufnr)
 	end
 end
 
+M.find_no_ignore = function(prompt_bufnr)
+	local current_picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+	local opts = {
+		hidden = true,
+		default_text = current_picker:_get_prompt(),
+	}
+	opts.no_ignore = true
+
+	require("telescope.actions").close(prompt_bufnr)
+	require("telescope.builtin").find_files(opts)
+end
+
+M.find_parent_directory = function(prompt_bufnr)
+	--Move Out 1 directory and find files
+	local opts = {}
+	opts.find_command = {
+		"fd",
+		"--type",
+		"f",
+		"--ignore-file",
+		"$HOME/.config/nvim/ignore/.general_ignore",
+		"--ignore-file",
+		"$HOME/.config/nvim/ignore/.tele_ignore",
+	}
+	_G.cwd = vim.fn.fnamemodify(_G.cwd, ":h")
+	opts.cwd = _G.cwd
+	require("telescope.actions").close(prompt_bufnr)
+	require("telescope.builtin").find_files(opts)
+end
+
+-- UNUSED
+--local finders = require("telescope.finders")
+--local make_entry = require("telescope.make_entry")
+--local action_state = require("telescope.actions.state")
+
+--local opts = {}
+--opts.entry_maker = make_entry.gen_from_file(opts)
+--local cmd = {
+--}
+--local current_picker = action_state.get_current_picker(prompt_bufnr)
+--current_picker:refresh(finders.new_oneshot_job(cmd, opts), {})
+--
+local tele_actions = require("telescope.actions")
 telescope.setup({
 	defaults = {
 		mappings = {
@@ -51,28 +98,8 @@ telescope.setup({
 		find_files = {
 			mappings = {
 				n = {
-					--Move Out 1 directory and find files
-					["<S-p>"] = function(prompt_bufnr)
-						local finders = require("telescope.finders")
-						local make_entry = require("telescope.make_entry")
-						local action_state = require("telescope.actions.state")
-
-						local opts = {}
-						opts.entry_maker = make_entry.gen_from_file(opts)
-						_G.cwd = vim.fn.fnamemodify(_G.cwd, ":h")
-						opts.cwd = _G.cwd
-						local cmd = {
-							"fd",
-							"--type",
-							"f",
-							"--ignore-file",
-							"$HOME/.config/nvim/ignore/.general_ignore",
-							"--ignore-file",
-							"$HOME/.config/nvim/ignore/.tele_ignore",
-						}
-						local current_picker = action_state.get_current_picker(prompt_bufnr)
-						current_picker:refresh(finders.new_oneshot_job(cmd, opts), {})
-					end,
+					["<S-p>"] = M.find_parent_directory,
+					["h"] = M.find_no_ignore,
 				},
 			},
 		},
@@ -94,6 +121,11 @@ telescope.setup({
 			git_status = false,
 			hidden = true,
 			use_fd = true,
+			mappings = {
+				["n"] = {
+					["]"] = require("telescope._extensions.file_browser.actions").toggle_respect_gitignore,
+				},
+			},
 		},
 		fzf = {
 			fuzzy = true,
