@@ -21,6 +21,7 @@ local sections = {
 	h = { name = "Help" },
 	d = { name = "Debug" },
 	u = { name = "UI" },
+	l = { name = "LSP" },
 }
 
 -- Initial Load of all Custom configs
@@ -54,9 +55,13 @@ MapGroup["<leader>i"] = sections.i
 vmap("n", "<leader>ia", "<cmd>Telescope diagnostics<CR>", KeyOpts("Diagnostics"))
 vmap("n", "<leader>i[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", KeyOpts("Prev Error"))
 vmap("n", "<leader>i]", "<cmd>lua vim.diagnostic.goto_next()<CR>", KeyOpts("Next Error"))
-vmap("n", "<leader>iL", "<cmd>LspLog<CR>", KeyOpts("LSP Log"))
-vmap("n", "<leader>ii", Custom.diagnostics.close_diag_at_cursor, KeyOpts("At Cursor"))
+vmap("n", "<leader>ic", Custom.diagnostics.close_diag_at_cursor, KeyOpts("At Cursor"))
 vmap("n", "<leader>il", Custom.diagnostics.close_diag_at_line, KeyOpts("At Line"))
+
+MapGroup["<leader>l"] = sections.l
+vmap("n", "<leader>ll", "<cmd>LspLog<CR>", KeyOpts("LSP Log"))
+vmap("n", "<leader>li", "<cmd>LspInfo<CR>", KeyOpts("Lsp Info"))
+vmap("n", "<leader>lr", "<cmd>LspRestart<CR>", KeyOpts("Lsp Restart"))
 
 --
 --Config
