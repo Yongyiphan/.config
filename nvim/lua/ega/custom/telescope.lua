@@ -146,6 +146,15 @@ M.t_find_files = function()
 	})
 end
 
+M.t_find_share_files = function()
+	local opts = {
+		hidden = true,
+		no_ignore = true,
+		cwd = "~/.local/share",
+	}
+	builtin.find_files(opts)
+end
+
 M.t_live_grep = function()
 	builtin.live_grep()
 end

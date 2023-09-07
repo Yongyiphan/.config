@@ -15,6 +15,7 @@ require("mason-nvim-dap").setup({
 
 require("ega.custom.dap.settings.luad")
 require("ega.custom.dap.settings.pythond")
+require("ega.custom.dap.settings.cppd")
 
 dapui.setup({
 	layouts = {

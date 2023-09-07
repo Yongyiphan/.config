@@ -57,6 +57,7 @@ vmap("n", "<leader>i[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", KeyOpts("Prev
 vmap("n", "<leader>i]", "<cmd>lua vim.diagnostic.goto_next()<CR>", KeyOpts("Next Error"))
 vmap("n", "<leader>ic", Custom.diagnostics.close_diag_at_cursor, KeyOpts("At Cursor"))
 vmap("n", "<leader>il", Custom.diagnostics.close_diag_at_line, KeyOpts("At Line"))
+vmap("n", "<leader>im", "<cmd>messages<CR>", KeyOpts("Sys Messages"))
 
 MapGroup["<leader>l"] = sections.l
 vmap("n", "<leader>ll", "<cmd>LspLog<CR>", KeyOpts("LSP Log"))
@@ -68,8 +69,8 @@ vmap("n", "<leader>lr", "<cmd>LspRestart<CR>", KeyOpts("Lsp Restart"))
 --
 MapGroup["<leader>c"] = sections.c
 vmap("n", "<leader>cv", Custom.config.edit_nvim, KeyOpts("Config Nvim"))
-vmap("n", "<leader>cs", Custom.config.save_source, KeyOpts("Source"))
 vmap("n", "<leader>cr", Custom.config.reload_config, KeyOpts("Reload Config"))
+vmap("n", "<leader>cs", Custom.telescope.t_find_share_files, KeyOpts("Share Files"))
 --
 --Find
 --
@@ -79,6 +80,7 @@ vmap("n", "<leader>ff", Custom.telescope.t_find_files, KeyOpts("Project File"))
 vmap("n", "<leader>fw", Custom.telescope.t_live_grep, KeyOpts("Word"))
 vmap("n", "<leader>fo", Custom.telescope.builtin.oldfiles, KeyOpts("Old Files"))
 vmap("n", "<leader>fg", Custom.git.G_git_files, KeyOpts("Git Files"))
+vmap("n", "<leader>fl", Utils.CurrentLoc, KeyOpts("File Loc"))
 
 --
 --Git Stuffs

@@ -21,7 +21,7 @@ rmlock(){
 	if [ -d ".git" ]; then
 		if [ -f ".git/index.lock" ]; then
 			echo "Index.lock Found"
-			rm -rf .git/index.lock
+			sudo rm -rf .git/index.lock
 			echo "Index.lock removed"
 		else
 			echo "Cannot find Index.lock"

@@ -6,6 +6,12 @@ if not dapui then
 	return
 end
 local vmap = vim.keymap.set
+local continue = function()
+	if vim.fn.filereadable(".vscode/launch.json") then
+		require("dap.ext.vscode").load_launchjs(nil, { cppdbg = { "c", "cpp" } })
+	end
+	require("dap").continue()
+end
 
 --vmap("n", "<leader>1", _G.dap_start, { noremap = true })
 --vmap("n", "<leader>2", _G.dap_stop, { noremap = true })
@@ -21,7 +27,7 @@ vmap("n", "<F9>", dap.step_over, _G.KeyOpts("Step-over"))
 vmap("n", "<F10>", dap.step_into, _G.KeyOpts("Step-into"))
 vmap("n", "<F8", dap.step_out, _G.KeyOpts("Step-out"))
 
-vmap("n", "<leader>dsc", dap.continue, _G.KeyOpts("Continue"))
+vmap("n", "<leader>dsc", continue, _G.KeyOpts("Continue"))
 vmap("n", "<leader>dsv", dap.step_over, _G.KeyOpts("Step Over"))
 vmap("n", "<leader>dsi", dap.step_into, _G.KeyOpts("Step Into"))
 vmap("n", "<leader>dso", dap.step_out, _G.KeyOpts("Step Out"))
