@@ -10,7 +10,10 @@ treesitter.setup({
 		"cpp",
 	},
 	auto_install = true,
---	highlight = {
---		enable = true,
---	},
+	--	highlight = {
+	--		enable = true,
+	--	},
 })
+
+local comments = require("Comment")
+comments.setup()
