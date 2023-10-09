@@ -21,9 +21,9 @@ _G.KeyOpts = function(desc, opts)
 		silent = true,
 		expr = false,
 		nowait = false,
-	}, opts or {})
+	}
 	opts.desc = desc or ""
-	vim.keymap.set(mode, keybind, cmd, opts)
+	return opts
 end
 
 M.CurrentLoc = function()

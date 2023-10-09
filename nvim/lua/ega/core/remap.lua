@@ -1,5 +1,5 @@
 local MapGroup = _G.Core.MapGroup
-local utils = require("ega.core.utils")
+local vmap = vim.keymap.set
 local telescope = _G.call("telescope")
 if not telescope then
 	return
@@ -42,14 +42,14 @@ vmap("n", "<leader>y", "ggVGy<C-o>", KeyOpts("Yank Yall"))
 --Splits (Default = <C-w>)
 --
 MapGroup["<leader>s"] = sections.s
-utils.map("n", "<leader>sv", "<C-w>v", "Split vert")
-utils.map("n", "<leader>sh", "<C-w>s", "Split hort")
-utils.map("n", "<leader>se", "<C-w>=", "Equal split size")
-utils.map("n", "<leader>sx", ":close<CR>", "Close curr split")
-utils.map("n", "<leader>sj", "<C-w>j", "Move to Above Split")
-utils.map("n", "<leader>sk", "<C-w>k", "Move to Below Split")
-utils.map("n", "<leader>sh", "<C-w>h", "Move to Left  Split")
-utils.map("n", "<leader>sl", "<C-w>l", "Move to Right Split")
+vmap("n", "<leader>sv", "<C-w>v", KeyOpts("Split vert"))
+vmap("n", "<leader>sh", "<C-w>s", KeyOpts("Split hort"))
+vmap("n", "<leader>se", "<C-w>=", KeyOpts("Equal split size"))
+vmap("n", "<leader>sx", ":close<CR>", KeyOpts("Close curr split"))
+vmap("n", "<leader>sj", "<C-w>j", KeyOpts("Move to Above Split"))
+vmap("n", "<leader>sk", "<C-w>k", KeyOpts("Move to Below Split"))
+vmap("n", "<leader>sh", "<C-w>h", KeyOpts("Move to Left  Split"))
+vmap("n", "<leader>sl", "<C-w>l", KeyOpts("Move to Right Split"))
 
 --Diagnostics
 MapGroup["<leader>i"] = sections.i
@@ -126,8 +126,8 @@ vmap("n", "<leader>bA", "<cmd>:BWipeout! all<CR>", KeyOpts("Clear *ALL* buf"))
 vmap("n", "<leader>bb", Custom.telescope.builtin.buffers, KeyOpts("List Buffers"))
 vmap("n", "<leader>bl", Utils.CurrentLoc, KeyOpts("Filepath"))
 
-utils.map("n", "<tab>", "<cmd>:BufferLineCycleNext<CR>", "Next buffer")
-utils.map("n", "<S-tab>", "<cmd>:BufferLineCyclePrev<CR>", "Prev buffer")
+vmap("n", "<tab>", "<cmd>:BufferLineCycleNext<CR>", KeyOpts("Next buffer"))
+vmap("n", "<S-tab>", "<cmd>:BufferLineCyclePrev<CR>", KeyOpts("Prev buffer"))
 
 --
 --Help
@@ -139,6 +139,10 @@ vmap("n", "<leader>hk", Custom.telescope.builtin.keymaps, KeyOpts("Key Maps"))
 --
 --Debug
 --
+local dap = _G.call("dap")
+if not dap then
+	return
+end
 MapGroup["<leader>d"] = sections.d
 MapGroup["<leader>du"] = sections.u
 require("ega.custom.dap.keybinding")
