@@ -18,6 +18,7 @@ M.save_source = function()
 		print("Not a .config lua file")
 	end
 end
+
 M.reload_config = function()
 	for name, _ in ipairs(package.loaded) do
 		if name:match("^ega") then
@@ -27,5 +28,29 @@ M.reload_config = function()
 	end
 	dofile(vim.env.MYVIMRC)
 	vim.notify("Reload T Nvim Config!", vim.log.levels.INFO)
+end
+
+M.yankall = function()
+	vim.cmd("ggvGy")
+end
+local ctele = require("ega.custom.telescope")
+local core_files_dir = "~/.config/nvim"
+local share_files_dir = vim.fn.fnamemodify(vim.fn.stdpath("data"), ":h")
+
+M.t_core_files = function()
+	ctele.t_find_files(core_files_dir)
+end
+M.t_share_files = function()
+	local opts = {
+		hidden = true,
+		no_ignore = true,
+	}
+	ctele.t_find_files(share_files_dir, opts)
+end
+M.b_core_files = function()
+	ctele.file_explorer(core_files_dir)
+end
+M.b_share_files = function()
+	ctele.file_explorer(share_files_dir)
 end
 return M

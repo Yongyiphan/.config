@@ -36,6 +36,7 @@ vmap("v", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<CR>", KeyOpts("Rename"))
 vmap("x", "<leader>p", '"_dP', KeyOpts("Paste & Keep"))
 vmap("n", "<leader>w", [[:w<CR>]], KeyOpts("Write"))
 vmap("n", "<leader>q", [[:q<CR>]], KeyOpts("Quit"))
+vmap("n", "<leader>y", "ggVGy<C-o>", KeyOpts("Yank Yall"))
 
 --
 --Splits (Default = <C-w>)
@@ -68,9 +69,10 @@ vmap("n", "<leader>lr", "<cmd>LspRestart<CR>", KeyOpts("Lsp Restart"))
 --Config
 --
 MapGroup["<leader>c"] = sections.c
-vmap("n", "<leader>cv", Custom.config.edit_nvim, KeyOpts("Config Nvim"))
-vmap("n", "<leader>cr", Custom.config.reload_config, KeyOpts("Reload Config"))
-vmap("n", "<leader>cs", Custom.telescope.t_find_share_files, KeyOpts("Share Files"))
+vmap("n", "<leader>cf", Custom.config.t_core_files, KeyOpts("Telescope Config"))
+vmap("n", "<leader>cs", Custom.config.t_share_files, KeyOpts("Telescope Share Files"))
+vmap("n", "<leader>ce", Custom.config.b_core_files, KeyOpts("Browse Core Files"))
+vmap("n", "<leader>cE", Custom.config.b_share_files, KeyOpts("Browse Share Files"))
 --
 --Find
 --

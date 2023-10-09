@@ -8,6 +8,20 @@ local M = {}
 M.builtin = builtin
 M.telescope = telescope
 
+M.GetSelected = function(prompt_bufnr)
+	local action_state = require("telescope.actions.state")
+	local picker = action_state.get_current_picker(prompt_bufnr)
+	local current_entry = action_state.get_selected_entry()
+	local selections = {}
+	table.insert(selections, current_entry)
+	for _, entry in ipairs(picker:get_multi_selection()) do
+		if not vim.tbl_contains(selections, entry) then
+			table.insert(selections, entry)
+		end
+	end
+	return selections
+end
+
 M.open_pdf = function(entry)
 	local script_path = "$HOME/.config/nvim/bash/open_edge.sh"
 	local selection = Utils.convert_path_to_windows(entry)
@@ -21,23 +35,31 @@ M.open_pdf = function(entry)
 end
 
 M.file_open = function(prompt_bufnr)
-	local action_state = require("telescope.actions.state")
-	local picker = action_state.get_current_picker(prompt_bufnr)
-	-- local current_entry = action_state.get_selected_entry(prompt_bufnr)
-	local current_entry = action_state.get_selected_entry()
-	local selections = {}
-	table.insert(selections, current_entry)
-	for _, entry in ipairs(picker:get_multi_selection()) do
-		if not vim.tbl_contains(selections, entry) then
-			table.insert(selections, entry)
-		end
-	end
+	local selections = M.GetSelected(prompt_bufnr)
 	for _, entry in ipairs(selections) do
 		if vim.fn.fnamemodify(entry.value, ":e") == "pdf" then
 			M.open_pdf(entry.path)
 		end
 		require("telescope.actions").close(prompt_bufnr)
 	end
+end
+
+M.unzip_file = function(prompt_bufnr)
+	local function unzip_file(filename, destination)
+		local command = string.format("unzip %s -d %s", vim.fn.shellescape(filename), vim.fn.shellescape(destination))
+		vim.fn.system(command)
+	end
+	local selections = M.GetSelected(prompt_bufnr)
+	for _, entry in ipairs(selections) do
+		local current_file = vim.fn.fnamemodify(entry.path, ":t")
+		local extension = current_file:match("%.([^%.]+)$")
+		if extension == "zip" then
+			local filename = current_file:gsub("%.[^.]*$", "")
+			unzip_file(current_file, ".//" .. filename .. "//")
+		end
+	end
+	require("telescope.actions").close(prompt_bufnr)
+	M.file_explorer()
 end
 
 M.find_no_ignore = function(prompt_bufnr)
@@ -124,6 +146,7 @@ telescope.setup({
 			mappings = {
 				["n"] = {
 					["]"] = require("telescope._extensions.file_browser.actions").toggle_respect_gitignore,
+					["z"] = M.unzip_file,
 				},
 			},
 		},
@@ -139,19 +162,12 @@ telescope.setup({
 	},
 })
 
-M.t_find_files = function()
+M.t_find_files = function(cwd, opts)
 	_G.cwd = vim.fn.expand("%:p:h")
-	builtin.find_files({
-		find_command = { "fd", "--type", "f", "--ignore-file", "$HOME/.config/nvim/ignore/.tele_ignore" },
-	})
-end
-
-M.t_find_share_files = function()
-	local opts = {
-		hidden = true,
-		no_ignore = true,
-		cwd = "~/.local/share",
+	opts = opts or {
+		cwd = cwd or vim.loop.cwd(),
 	}
+	opts.find_command = { "fd", "--type", "f", "--ignore-file", "$HOME/.config/nvim/ignore/.tele_ignore" }
 	builtin.find_files(opts)
 end
 
@@ -159,8 +175,11 @@ M.t_live_grep = function()
 	builtin.live_grep()
 end
 
-M.file_explorer = function()
-	telescope.extensions.file_browser.file_browser()
+M.file_explorer = function(browser_dir)
+	local opts = {
+		cwd = browser_dir or vim.loop.cwd(),
+	}
+	telescope.extensions.file_browser.file_browser(opts)
 end
 
 telescope.load_extension("file_browser")
