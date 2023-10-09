@@ -30,5 +30,13 @@ rmlock(){
 
 }
 alias rmlock=rmlock
+alias gremote="git remote -v"
+rmlf(){
+	echo "Changing $1"
+	sed -i -e "s/\r//g" "$1"
+}
+alias rmlf=rmlf
+alias attach="tmux attach -t"
+alias detach="if [ -n "$TMUX" ]; then tmux detach; else exit; fi"
 
 echo "Sourced Bash Aliases"

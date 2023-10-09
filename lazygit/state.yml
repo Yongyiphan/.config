@@ -14,3 +14,4 @@ customcommandshistory:
 - git config --global user.name "edgar"
 - submodule
 hidecommandlog: true
+ignorewhitespaceindiffview: false

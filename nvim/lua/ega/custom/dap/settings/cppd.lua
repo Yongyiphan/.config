@@ -1,6 +1,5 @@
 local dap = require("dap")
-local OpenDebugAD7_path =
-	"/home/eyong/.local/share/nvim/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7"
+local OpenDebugAD7_path = vim.fn.stdpath("data") .. "/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7"
 
 dap.adapters.cppdbg = {
 	id = "cppdbg",
