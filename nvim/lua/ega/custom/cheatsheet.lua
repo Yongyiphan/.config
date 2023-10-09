@@ -1,11 +1,11 @@
-
 local toggleterm = _G.call("toggleterm")
 if not toggleterm then
 	return
 end
+local M = {}
 
 local Terminal = require("toggleterm.terminal").Terminal
-_G.cheatsheet = Terminal:new({
+M.cheatsheet = Terminal:new({
 	cmd = "navi fn welcome",
 	direction = "float",
 	hidden = true,
@@ -26,6 +26,8 @@ _G.cheatsheet = Terminal:new({
 	close_on_exit = false,
 })
 
-function _G.cheatsheet_toggle()
-	_G.cheatsheet:toggle()
+function M.cheatsheet_toggle()
+	M.cheatsheet:toggle()
 end
+
+return M

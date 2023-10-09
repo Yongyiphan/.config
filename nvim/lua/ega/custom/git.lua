@@ -10,8 +10,9 @@ if not toggleterm then
 	return
 end
 
+local M = {}
 local Terminal = require("toggleterm.terminal").Terminal
-local lazygit = Terminal:new({
+M.lazygit = Terminal:new({
 	cmd = "lazygit",
 	direction = "float",
 	hidden = true,
@@ -32,8 +33,8 @@ local lazygit = Terminal:new({
 	end,
 })
 
-function M.toggle_lazygit()
-	lazygit:toggle()
+function M._lazygit_toggle()
+	M.lazygit:toggle()
 end
 
 function M.G_git_files()

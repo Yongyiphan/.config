@@ -15,3 +15,6 @@ treesitter.setup({
 	--		enable = true,
 	--	},
 })
+
+local comments = require("Comment")
+comments.setup()

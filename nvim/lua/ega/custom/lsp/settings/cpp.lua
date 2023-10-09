@@ -31,14 +31,17 @@ _G.compile_commmands_json_to_unix = function()
 	end
 end
 
-_G.test_this(_G.compile_commmands_json_to_unix)
-
 local unused = {
 	--"--cross-file-rename",
 	--"--debug-origin",
 	--"--fallback-style=Qt",
 	--"--folding-ranges",
 	--"--suggest-missing-includes",
+	--"--pch-storage=memory", -- could also be disk
+	--"-j=4", -- number of workers
+	--"--log=error",
+	--"--log=verbose",
+	"--query-driver=/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.35.32215/bin/Hostx86/x86",
 }
 
 local cpp_server_settings = {
@@ -52,12 +55,8 @@ local cpp_server_settings = {
 		"--enable-config", -- clangd 11+ supports reading from .clangd configuration file
 		"--function-arg-placeholders",
 		"--header-insertion=iwyu",
-		"--pch-storage=memory", -- could also be disk
-		"-j=4",               -- number of workers
-		--"--log=error",
-		"--log=verbose",
 	},
-	filetypes = { "c", "cpp", "objc", "objcpp" },
+	filetypes = { "c", "cpp", "objc", "objcpp", "h", "hpp" },
 }
 
 require("clangd_extensions").setup({ server = cpp_server_settings,})

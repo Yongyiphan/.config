@@ -1,4 +1,4 @@
-local ts = {
+local M = {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		dependencies = {
@@ -10,13 +10,10 @@ local ts = {
 		end,
 	},
 	{
-		"creativenull/efmls-configs-nvim",
-		dependencies = {
-			"neovim/nvim-lspconfig",
-		},
-	},
-	{
 		"numirias/semshi",
+		build = function()
+			pcall(vim.cmd, "UpdateRemotePlugins")
+		end,
 	},
 }
-return ts
+return M

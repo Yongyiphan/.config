@@ -15,8 +15,29 @@ require("mason-nvim-dap").setup({
 
 require("ega.custom.dap.settings.luad")
 require("ega.custom.dap.settings.pythond")
+require("ega.custom.dap.settings.cppd")
 
-dapui.setup()
+dapui.setup({
+	layouts = {
+		{
+			elements = {
+				{ id = "scopes", size = 20 },
+				"stacks",
+				{ id = "breakpoints", size = 0.2 },
+			},
+			size = 40,
+			position = "left",
+		},
+		{
+			elements = {
+				"repl",
+				"console",
+			},
+			size = 0.25,
+			position = "bottom",
+		},
+	},
+})
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
 	dapui.open({
