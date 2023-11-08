@@ -11,6 +11,7 @@ local finders = require("telescope.finders")
 local conf = require("telescope.config").values
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
+
 dap.configurations.cpp = {
 	{
 		name = "C/C++ executable",
@@ -38,6 +39,7 @@ dap.configurations.cpp = {
 		end,
 	},
 }
+
 dap.configurations.c = dap.configurations.cpp
 if vim.fn.filereadable(".vscode/launch.json") then
 	require("dap.ext.vscode").load_launchjs()

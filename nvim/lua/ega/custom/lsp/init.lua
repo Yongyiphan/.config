@@ -47,9 +47,10 @@ M.setup = function(capabilities)
 
 	lspconfig.pyright.setup(require("ega.custom.lsp.settings.python").setup)
 
-	require("clangd_extensions").setup({
+	--[[ require("clangd_extensions").setup({
 		server = require("ega.custom.lsp.settings.clangd"),
-	})
+	}) ]]
+	lspconfig.clangd.setup(require("ega.custom.lsp.settings.clangd"))
 	--lspconfig.glslls.setup()
 	require("ega.custom.lsp.null_ls")
 end

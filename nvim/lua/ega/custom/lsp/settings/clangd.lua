@@ -55,5 +55,5 @@ return {
 		"--function-arg-placeholders",
 		"--header-insertion=iwyu",
 	},
-	filetypes = { "c", "cpp", "objc", "objcpp", "h", "hpp" },
+	filetypes = { "c", "cpp", "objc", "objcpp", "h", "hpp", "tpp" },
 }
