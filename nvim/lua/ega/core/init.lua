@@ -32,4 +32,5 @@ require("ega.custom")
 require("ega.core.remap")
 
 vim.cmd("colorscheme nightfox")
+-- vim.cmd([[colorscheme tokyonight]])
 print("Complete ega.core Init")
