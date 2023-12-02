@@ -5,6 +5,7 @@ end
 
 local M = {
 	ensure_installed = {
+
 		"clangd",
 		"cmake",
 		"lua_ls",
@@ -52,7 +53,10 @@ M.setup = function(capabilities)
 	}) ]]
 	lspconfig.clangd.setup(require("ega.custom.lsp.settings.clangd"))
 	--lspconfig.glslls.setup()
+	--TODO(REPLACE)
 	require("ega.custom.lsp.null_ls")
+	-- require("ega.custom.lsp.formatter")
+	-- require("ega.custom.lsp.linter")
 end
 
 --Outside of M.setup()
