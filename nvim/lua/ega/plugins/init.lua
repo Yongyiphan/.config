@@ -12,7 +12,11 @@ return {
 	--Auto closing
 	{ "windwp/nvim-autopairs" },
 	--snippets
-	{ "L3MON4D3/Luasnip" },
+	{
+		"L3MON4D3/Luasnip",
+		version = "v2.*",
+		build = "make install_jsregexp"
+	},
 	{ "saadparwaiz1/cmp_luasnip" }, -- for autocompletion
 	{ "rafamadriz/friendly-snippets" },
 	{
@@ -27,7 +31,7 @@ return {
 			})
 		end,
 	},
-	{ "EdenEast/nightfox.nvim", opts = {} },
+	{ "EdenEast/nightfox.nvim",  opts = {} },
 	--toggle terminal
 	{ "akinsho/toggleterm.nvim", version = "*", config = true },
 }
