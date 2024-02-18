@@ -22,6 +22,7 @@ local options = {
 	},
 }
 
+-- vim.cmd([[set guicursor=n-v-i-c:block-Cursor/lCursor]])
 vim.g.toggleterm_terminal_mappings = 0
 vim.lsp.set_log_level("error")
 vim.o.signcolumn = "yes"
