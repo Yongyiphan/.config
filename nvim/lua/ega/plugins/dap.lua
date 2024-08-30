@@ -1,9 +1,13 @@
 local M = {
-	{ "mfussenegger/nvim-dap" },
+	{
+		"mfussenegger/nvim-dap",
+		event = "VeryLazy",
+	},
 	{
 		"rcarriga/nvim-dap-ui",
 		dependencies = {
 			"mfussenegger/nvim-dap",
+			"nvim-neotest/nvim-nio"
 		},
 	},
 	{
@@ -28,4 +32,6 @@ local M = {
 		},
 	},
 }
+
+
 return M

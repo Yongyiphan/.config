@@ -19,6 +19,7 @@ vim.opt.rtp:prepend(lazypath)
 
 _G.Core = {
 	MapGroup = {},
+	LoadUpMsg = false,
 }
 
 require("ega.core.set")

@@ -19,6 +19,7 @@ local options = {
 		splitright = true,
 		splitbelow = true,
 		encoding = "utf-8",
+		termguicolors = true,
 	},
 }
 
@@ -26,6 +27,7 @@ local options = {
 vim.g.toggleterm_terminal_mappings = 0
 vim.lsp.set_log_level("error")
 vim.o.signcolumn = "yes"
+vim.opt.termguicolors = true
 require("vim.lsp.log").set_format_func(vim.inspect)
 for scope, table in pairs(options) do
 	for setting, value in pairs(table) do

@@ -29,16 +29,20 @@ mason_null_ls.setup({
 	automatic_installation = true,
 })
 
-null_ls.setup({
-	sources = {
-		diagnostics.ruff,
-		diagnostics.mypy,
-		diagnostics.cpplint,
+local sources = {
+	-- diagnostics.ruff,
+	-- diagnostics.cpplint,
+	diagnostics.mypy,
+	--formatters
+	formatting.stylua,
+	formatting.black,
+	null_ls.builtins.formatting.clang_format.with({
+		filetypes = { "h", "c", "hpp", "cpp", "tpp", "glsl", "vert", "frag", "geom" }
+	}),
+}
 
-		formatting.stylua,
-		formatting.clang_format,
-		formatting.black,
-	},
+null_ls.setup({
+	sources = sources,
 	on_attach = function(current_client, bufnr)
 		if current_client.supports_method("textDocument/formatting") then
 			vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })

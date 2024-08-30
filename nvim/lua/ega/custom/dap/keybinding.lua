@@ -1,8 +1,10 @@
 local dap, dapui = _G.call("dap"), _G.call("dapui")
 if not dap then
+	print(vim.api.nvim_buf_get_name(0))
 	return
 end
 if not dapui then
+	print(vim.api.nvim_buf_get_name(0))
 	return
 end
 local vmap = vim.keymap.set

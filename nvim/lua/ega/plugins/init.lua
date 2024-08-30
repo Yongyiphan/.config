@@ -1,4 +1,4 @@
-return {
+local core_plugins = {
 	{ "tpope/vim-fugitive" },
 	{ "tpope/vim-rhubarb" },
 	{ "tpope/vim-surround" },
@@ -31,7 +31,9 @@ return {
 			})
 		end,
 	},
-	{ "EdenEast/nightfox.nvim",  opts = {} },
+	{ "EdenEast/nightfox.nvim" },
 	--toggle terminal
 	{ "akinsho/toggleterm.nvim", version = "*", config = true },
 }
+
+return core_plugins

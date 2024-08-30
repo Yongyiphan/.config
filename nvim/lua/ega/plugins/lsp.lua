@@ -29,7 +29,12 @@ local P = {
 	-- 		"jose-elias-alvarez/null-ls.nvim",
 	-- 	},
 	-- }, -- bridges gap b/w mason & null-ls
-	{ "nvimtools/none-ls.nvim" }, -- configure formatters & linters
+	{
+		"nvimtools/none-ls.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim"
+		}
+	}, -- configure formatters & linters
 	{
 		"jayp0521/mason-null-ls.nvim",
 		event = { "BufReadPre", "BufNewFile" },
