@@ -120,7 +120,7 @@ refresh_gitignore(){
 	# Re-add all files, respecting the updated .gitignore
 	git add .
 
-	if [ $CMDID = 'commit']; then
+	if [ $CMDID = 'commit' ]; then
 		# Commit the changes
 		git commit -m "Refresh .gitignore changes"
 		echo ".gitignore changes have been refreshed and committed."
