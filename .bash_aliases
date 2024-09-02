@@ -127,3 +127,13 @@ refresh_gitignore(){
 	fi
 
 }
+
+import_brew(){
+	source $HOME/.config/bash_sh/sync_brew.sh
+	import_brew
+}
+
+export_brew(){
+	source $HOME/.config/bash_sh/sync_brew.sh
+	export_brew
+}
