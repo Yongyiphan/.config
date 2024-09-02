@@ -1,6 +1,6 @@
 alias git=git.exe
 msedge(){
-/mnt/c/Program\ Files\ \(x86\)/Microsoft/Edge/Application/msedge.exe "$@"
+	/mnt/c/Program\ Files\ \(x86\)/Microsoft/Edge/Application/msedge.exe "$@"
 }
 alias python=python3
 
