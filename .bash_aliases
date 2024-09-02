@@ -61,11 +61,18 @@ goto(){
         fi
     done
 
+		for user_dir in "$users_base_dir"/*/; do
+			if [ -d "${user_dir}Desktop" ]; then
+				documents_dirs+=("${user_dir}Desktop")
+			fi
+		done
+
     # Check if no 'Documents' directories were found
     if [ ${#documents_dirs[@]} -eq 0 ]; then
         echo "No 'Documents' directories found under /mnt/c/Users."
         return 1
     fi
+
 
     # Initialize an array to hold the search results
     local search_results=()
