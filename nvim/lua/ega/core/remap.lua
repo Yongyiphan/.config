@@ -10,18 +10,18 @@ if not whichkey then
 end
 
 local sections = {
-	f = { name = "Find" },
-	c = { name = "Config" },
-	i = { name = "Info" },
-	e = { name = "Explorer" },
-	b = { name = "Buffers" },
-	p = { name = "Project" },
-	g = { name = "Git" },
-	s = { name = "Split" },
-	h = { name = "Help" },
-	d = { name = "Debug" },
-	u = { name = "UI" },
-	l = { name = "LSP" },
+	f = { group = "Find" },
+	c = { group = "Config" },
+	i = { group = "Info" },
+	e = { group = "Explorer" },
+	b = { group = "Buffers" },
+	p = { group = "Project" },
+	g = { group = "Git" },
+	s = { group = "Split" },
+	h = { group = "Help" },
+	d = { group = "Debug" },
+	u = { group = "UI" },
+	l = { group = "LSP" },
 }
 
 -- Initial Load of all Custom configs
@@ -34,9 +34,10 @@ vmap("v", "K", ":m '<-2<CR>gv=gv", KeyOpts())
 vmap("v", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<CR>", KeyOpts("Rename"))
 
 vmap("x", "<leader>p", '"_dP', KeyOpts("Paste & Keep"))
-vmap("n", "<leader>w", [[:w<CR>]], KeyOpts("Write"))
-vmap("n", "<leader>q", [[:q<CR>]], KeyOpts("Quit"))
+vmap("n", "<leader>w", [[:w<CR>]], KeyOpts("W"))
+vmap("n", "<leader>q", [[:q<CR>]], KeyOpts("Q"))
 vmap("n", "<leader>y", "ggVGy<C-o>", KeyOpts("Yank Yall"))
+vmap("n", "<leader>x", "ggVGy<C-o>", KeyOpts("WQ"))
 
 --
 --Splits (Default = <C-w>)
@@ -149,4 +150,14 @@ require("ega.custom.dap.keybinding")
 --
 --Register Key Groups
 --
-whichkey.register(MapGroup)
+
+local function reformat_keybindingStruture(map)
+	local list = {}
+	for key, value in pairs(map) do
+		table.insert(list, { key, value.group })
+	end
+	return list
+end
+
+whichkey.add(reformat_keybindingStruture(MapGroup))
+-- whichkey.register(MapGroup)

@@ -5,7 +5,7 @@ end
 
 local M = {
 	ensure_installed = {
-
+	
 		"clangd",
 		"cmake",
 		"lua_ls",
@@ -38,16 +38,16 @@ M.setup = function(capabilities)
 			{ name = "nvim_lsp" },
 		},
 	})
-
+	
 	capabilities = capabilities or M.capabilities["cmp_nvim"]
-
+	
 	lspconfig.lua_ls.setup({
 		settings = require("ega.custom.lsp.settings.lua_ls"),
 		capabilities = capabilities,
 	})
-
+	
 	lspconfig.pyright.setup(require("ega.custom.lsp.settings.python").setup)
-
+	
 	-- require("clangd_extensions").setup({
 	-- 	server = require("ega.custom.lsp.settings.clangd"),
 	-- })
@@ -69,7 +69,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(ev)
 		-- Enable completion triggered by <c-x><c-o>
 		vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-
+		
 		-- Buffer local mappings.
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
 		local opts = { buffer = ev.buf }
