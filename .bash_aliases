@@ -137,3 +137,25 @@ export_brew(){
 	source $HOME/.config/bash_sh/sync_brew.sh
 	export_brew
 }
+
+githelp(){
+	source $HOME/.config/bash_sh git_guideline.sh
+	git_help
+}
+
+enable_file(){
+	# Check if exactly one argument is provided
+	if [ $# -ne 1 ]; then
+			echo "Error: Please provide exactly one file path."
+			return 1
+	fi
+
+	# Check if the file exists
+	if [ -f "$1" ]; then
+			chmod +x "$1"
+			echo "File '$1' is now executable."
+	else
+			echo "Error: File '$1' does not exist."
+			return 1
+	fi
+}
