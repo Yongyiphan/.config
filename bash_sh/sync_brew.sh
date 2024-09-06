@@ -24,6 +24,14 @@ export_brew(){
 }
 
 import_brew(){
+	#Install Brew
+	if ! command -v brew &> /dev/null
+	then
+			/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+			(echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> $HOME/.profile
+			eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+	fi
+
 	# Ensure you are in the correct directory
 	cd $BREWFILE_DIR
 
