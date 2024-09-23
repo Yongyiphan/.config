@@ -9,6 +9,7 @@ echo "5) Inspection and Logs"
 echo "6) Stashing"
 echo "7) Rebasing and Merging"
 echo "8) Undoing Changes"
+echo "9) Submodules"
 
 read -p "Enter the number corresponding to the category: " category
 
@@ -69,6 +70,15 @@ case $category in
     echo "git reset --hard                    # Reset the index and working directory to the last commit"
     echo "git revert <commit>                 # Create a new commit that undoes the changes of a previous commit"
     ;;
+	9)
+		echo -e "\n== Git Submodule Commands =="
+    echo "git submodule add <url>             # Add a new submodule"
+    echo "git submodule update --init --recursive   # Initialize and update submodules"
+    echo "git submodule foreach git pull origin main # Pull the latest changes for all submodules"
+    echo "git submodule status                # Check the status of submodules"
+    echo "git submodule deinit <path>         # Deinitialize a submodule"
+    echo "git submodule sync                  # Synchronize submodules with the remote repository"
+		;;
   *)
     echo "Invalid option. Please select a valid category."
     ;;

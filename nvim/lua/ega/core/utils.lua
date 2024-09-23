@@ -38,6 +38,10 @@ _G.KeyOpts = function(desc, opts)
 	return opts
 end
 
+_G.adjust_width = function(delta)
+	vim.cmd('vertical resize ' .. delta)
+end
+
 M.CurrentLoc = function()
 	print(vim.fn.expand("%:p"))
 end

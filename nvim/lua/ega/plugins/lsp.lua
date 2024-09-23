@@ -1,3 +1,4 @@
+local Languages = require("ega.plugins.lspLang")
 local P = {
 	{ "neovim/nvim-lspconfig" },
 	{
@@ -47,6 +48,7 @@ local P = {
 		"stevearc/conform.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 	},
+	Languages
 }
 
 return P

@@ -69,7 +69,7 @@ M.find_no_ignore = function(prompt_bufnr)
 		default_text = current_picker:_get_prompt(),
 	}
 	opts.no_ignore = true
-
+	
 	require("telescope.actions").close(prompt_bufnr)
 	require("telescope.builtin").find_files(opts)
 end
@@ -178,6 +178,8 @@ end
 M.file_explorer = function(browser_dir)
 	local opts = {
 		cwd = browser_dir or vim.loop.cwd(),
+		hidden = true,
+		respect_gitignore = false,
 	}
 	telescope.extensions.file_browser.file_browser(opts)
 end
