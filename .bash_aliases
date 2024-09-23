@@ -139,8 +139,7 @@ export_brew(){
 }
 
 githelp(){
-	source $HOME/.config/bash_sh git_guideline.sh
-	git_help
+	source $HOME/.config/bash_sh/git_guideline.sh
 }
 
 enable_file(){

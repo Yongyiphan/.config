@@ -51,6 +51,8 @@ vmap("n", "<leader>sj", "<C-w>j", KeyOpts("Move to Above Split"))
 vmap("n", "<leader>sk", "<C-w>k", KeyOpts("Move to Below Split"))
 vmap("n", "<leader>sh", "<C-w>h", KeyOpts("Move to Left  Split"))
 vmap("n", "<leader>sl", "<C-w>l", KeyOpts("Move to Right Split"))
+vmap('n', '<Leader>si', '<cmd>lua adjust_width("+5")<CR>', KeyOpts("Increase Width"))
+vmap('n', '<Leader>sd', '<cmd>lua adjust_width("-5")<CR>', KeyOpts("Decrease Width"))
 
 --Diagnostics
 MapGroup["<leader>i"] = sections.i
