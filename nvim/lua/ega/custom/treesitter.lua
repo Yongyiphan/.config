@@ -8,6 +8,10 @@ treesitter.setup({
 		"lua",
 		"vim",
 		"cpp",
+		"asm",
+	},
+	highlight = {
+		enable = true,
 	},
 	auto_install = true,
 	--	highlight = {

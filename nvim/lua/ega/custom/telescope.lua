@@ -2,18 +2,21 @@ local telescope = _G.call("telescope")
 if not telescope then
 	return
 end
+
 local builtin = require("telescope.builtin")
 local Utils = require("ega.core.utils")
 local M = {}
+local show_hidden_files = false
 M.builtin = builtin
 M.telescope = telescope
 
-M.GetSelected = function(prompt_bufnr)
+-- Get selected entries from the current picker
+M.get_selected_entries = function(prompt_bufnr)
 	local action_state = require("telescope.actions.state")
 	local picker = action_state.get_current_picker(prompt_bufnr)
 	local current_entry = action_state.get_selected_entry()
-	local selections = {}
-	table.insert(selections, current_entry)
+	local selections = { current_entry }
+	-- Add multiple selections if applicable
 	for _, entry in ipairs(picker:get_multi_selection()) do
 		if not vim.tbl_contains(selections, entry) then
 			table.insert(selections, entry)
@@ -22,34 +25,37 @@ M.GetSelected = function(prompt_bufnr)
 	return selections
 end
 
-M.open_pdf = function(entry)
+-- Open PDF using external script
+M.open_pdf_with_script = function(entry)
 	local script_path = "$HOME/.config/nvim/bash/open_edge.sh"
 	local selection = Utils.convert_path_to_windows(entry)
 	if selection then
 		local cmd = string.format("%s %s", script_path, selection)
 		local status = vim.fn.system(cmd)
-		assert(status ~= 0, "Error: Open PDF: " .. vim.fn.fnamemodify(entry, ":t"))
+		assert(status ~= 0, "Error: Unable to open PDF: " .. vim.fn.fnamemodify(entry, ":t"))
 	else
 		print("Not a Windows file")
 	end
 end
 
-M.file_open = function(prompt_bufnr)
-	local selections = M.GetSelected(prompt_bufnr)
+-- Open selected file or PDF
+M.open_selected_file = function(prompt_bufnr)
+	local selections = M.get_selected_entries(prompt_bufnr)
 	for _, entry in ipairs(selections) do
 		if vim.fn.fnamemodify(entry.value, ":e") == "pdf" then
-			M.open_pdf(entry.path)
+			M.open_pdf_with_script(entry.path)
 		end
 		require("telescope.actions").close(prompt_bufnr)
 	end
 end
 
-M.unzip_file = function(prompt_bufnr)
+-- Unzip selected files
+M.unzip_selected_file = function(prompt_bufnr)
 	local function unzip_file(filename, destination)
 		local command = string.format("unzip %s -d %s", vim.fn.shellescape(filename), vim.fn.shellescape(destination))
 		vim.fn.system(command)
 	end
-	local selections = M.GetSelected(prompt_bufnr)
+	local selections = M.get_selected_entries(prompt_bufnr)
 	for _, entry in ipairs(selections) do
 		local current_file = vim.fn.fnamemodify(entry.path, ":t")
 		local extension = current_file:match("%.([^%.]+)$")
@@ -59,23 +65,38 @@ M.unzip_file = function(prompt_bufnr)
 		end
 	end
 	require("telescope.actions").close(prompt_bufnr)
-	M.file_explorer()
+	M.open_file_explorer()
 end
 
-M.find_no_ignore = function(prompt_bufnr)
+-- Find files without ignoring .gitignore
+M.find_files_no_ignore = function(prompt_bufnr)
 	local current_picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
 	local opts = {
-		hidden = true,
+		hidden = false,
+		respect_gitignore = false,
 		default_text = current_picker:_get_prompt(),
+		no_ignore = true
 	}
-	opts.no_ignore = true
-	
 	require("telescope.actions").close(prompt_bufnr)
 	require("telescope.builtin").find_files(opts)
 end
 
-M.find_parent_directory = function(prompt_bufnr)
-	--Move Out 1 directory and find files
+-- Function to toggle showing hidden files
+M.toggle_hidden_files = function(prompt_bufnr)
+	-- Toggle the hidden files state
+	show_hidden_files = not show_hidden_files
+	local opts = {
+		cwd = vim.loop.cwd(),
+		hidden = show_hidden_files,
+		respect_gitignore = false,
+	}
+	-- Update the UI with the new hidden files state
+	require("telescope.actions").close(prompt_bufnr)
+	telescope.extensions.file_browser.file_browser(opts)
+end
+
+-- Move to the parent directory and find files
+M.find_files_in_parent_directory = function(prompt_bufnr)
 	local opts = {}
 	opts.find_command = {
 		"fd",
@@ -86,33 +107,65 @@ M.find_parent_directory = function(prompt_bufnr)
 		"--ignore-file",
 		"$HOME/.config/nvim/ignore/.tele_ignore",
 	}
+	
 	_G.cwd = vim.fn.fnamemodify(_G.cwd, ":h")
 	opts.cwd = _G.cwd
+	
 	require("telescope.actions").close(prompt_bufnr)
 	require("telescope.builtin").find_files(opts)
 end
 
--- UNUSED
---local finders = require("telescope.finders")
---local make_entry = require("telescope.make_entry")
---local action_state = require("telescope.actions.state")
+-- File explorer: rename a selected file
+M.rename_selected_file = function(prompt_bufnr)
+	local action_state = require("telescope.actions.state")
+	local current_picker = action_state.get_current_picker(prompt_bufnr)
+	local entry = action_state.get_selected_entry()
+	
+	if entry ~= nil then
+		local old_name = entry.path
+		
+		vim.ui.input({ prompt = 'Rename to: ', default = old_name }, function(new_name)
+			if new_name and new_name ~= "" and new_name ~= old_name then
+				vim.fn.rename(old_name, new_name)
+				current_picker:refresh()
+			end
+		end)
+	end
+end
 
---local opts = {}
---opts.entry_maker = make_entry.gen_from_file(opts)
---local cmd = {
---}
---local current_picker = action_state.get_current_picker(prompt_bufnr)
---current_picker:refresh(finders.new_oneshot_job(cmd, opts), {})
---
-local tele_actions = require("telescope.actions")
+-- File explorer: show all files, including hidden ones
+M.show_all_files_in_explorer = function(prompt_bufnr)
+	local opts = {
+		cwd = vim.loop.cwd(),
+		hidden = true,
+		respect_gitignore = false,
+		no_ignore = true
+	}
+	
+	require("telescope.actions").close(prompt_bufnr)
+	telescope.extensions.file_browser.file_browser(opts)
+end
+
+-- Open file explorer with custom options
+M.open_file_explorer = function(browser_dir)
+	local opts = {
+		cwd = browser_dir or vim.loop.cwd(),
+		hidden = true,
+		respect_gitignore = false,
+	}
+	
+	telescope.extensions.file_browser.file_browser(opts)
+end
+
+-- Telescope setup with mappings and extensions
 telescope.setup({
 	defaults = {
 		mappings = {
 			n = {
-				["<C-o>"] = M.file_open,
+				["<C-o>"] = M.open_selected_file,
 			},
 			i = {
-				["<C-o>"] = M.file_open,
+				["<C-o>"] = M.open_selected_file,
 			},
 		},
 	},
@@ -120,8 +173,8 @@ telescope.setup({
 		find_files = {
 			mappings = {
 				n = {
-					["<S-p>"] = M.find_parent_directory,
-					["h"] = M.find_no_ignore,
+					["<S-p>"] = M.find_files_in_parent_directory,
+					["h"] = M.find_files_no_ignore,
 				},
 			},
 		},
@@ -146,7 +199,9 @@ telescope.setup({
 			mappings = {
 				["n"] = {
 					["]"] = require("telescope._extensions.file_browser.actions").toggle_respect_gitignore,
-					["z"] = M.unzip_file,
+					["z"] = M.unzip_selected_file,
+					["r"] = M.rename_selected_file,
+					["h"] = M.show_all_files_in_explorer,
 				},
 			},
 		},
@@ -162,7 +217,8 @@ telescope.setup({
 	},
 })
 
-M.t_find_files = function(cwd, opts)
+-- Find files with custom command
+M.find_files_custom = function(cwd, opts)
 	_G.cwd = vim.fn.expand("%:p:h")
 	opts = opts or {
 		cwd = cwd or vim.loop.cwd(),
@@ -171,21 +227,15 @@ M.t_find_files = function(cwd, opts)
 	builtin.find_files(opts)
 end
 
-M.t_live_grep = function()
+-- Live grep files
+M.live_grep_files = function()
 	builtin.live_grep()
-end
-
-M.file_explorer = function(browser_dir)
-	local opts = {
-		cwd = browser_dir or vim.loop.cwd(),
-		hidden = true,
-		respect_gitignore = false,
-	}
-	telescope.extensions.file_browser.file_browser(opts)
 end
 
 telescope.load_extension("file_browser")
 telescope.load_extension("media_files")
 telescope.load_extension("fzf")
 telescope.load_extension("dap")
+
 return M
+

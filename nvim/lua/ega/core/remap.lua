@@ -81,8 +81,8 @@ vmap("n", "<leader>cE", Custom.config.b_share_files, KeyOpts("Browse Share Files
 --
 MapGroup["<leader>f"] = sections.f
 vmap("n", "<leader>fm", Custom.fzflua.main_fzf_files, KeyOpts("From C:"))
-vmap("n", "<leader>ff", Custom.telescope.t_find_files, KeyOpts("Project File"))
-vmap("n", "<leader>fw", Custom.telescope.t_live_grep, KeyOpts("Word"))
+vmap("n", "<leader>ff", Custom.telescope.find_files_custom, KeyOpts("Project File"))
+vmap("n", "<leader>fw", Custom.telescope.live_grep_files, KeyOpts("Word"))
 vmap("n", "<leader>fo", Custom.telescope.builtin.oldfiles, KeyOpts("Old Files"))
 vmap("n", "<leader>fg", Custom.git.G_git_files, KeyOpts("Git Files"))
 vmap("n", "<leader>fl", Utils.CurrentLoc, KeyOpts("File Loc"))
@@ -97,7 +97,7 @@ vmap("n", "<leader>gt", Custom.git._lazygit_toggle, KeyOpts("Git Terminal"))
 --File Explorer Stuffs
 --
 --MapGroup["<leader>e"] = sections.e
-vmap("n", "<leader>e", Custom.telescope.file_explorer, KeyOpts(sections.e.name))
+vmap("n", "<leader>e", Custom.telescope.open_file_explorer, KeyOpts(sections.e.name))
 
 -- Default keymaps in insert/normal mode:
 -- `<cr>`: opens the currently selected file, or navigates to the currently selected directory
